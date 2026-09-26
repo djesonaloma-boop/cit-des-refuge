@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chansons — MI.C.L.A</title>
+<style>
+:root{--bg:#060b14;--bg2:#09111f;--surface:#0e1726;--gold:#d6ad55;--gold-light:#f1d58b;--text:#e8eef7;--muted:#8d9bb0;--border:rgba(255,255,255,.075);--gold-border:rgba(214,173,85,.25);--shadow:0 20px 60px rgba(0,0,0,.35);}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;color:var(--text);background:radial-gradient(circle at 10% 10%,rgba(214,173,85,.07),transparent 30%),linear-gradient(180deg,var(--bg),var(--bg2),var(--bg));min-height:100vh}a{text-decoration:none;color:inherit}
+header{position:sticky;top:0;z-index:1000;background:rgba(6,11,20,.88);backdrop-filter:blur(18px);border-bottom:1px solid var(--border)}.header-inner{width:min(1150px,94%);min-height:72px;margin:auto;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px}.brand img{width:46px;height:46px;object-fit:contain;border-radius:12px;border:1px solid var(--gold-border);background:#0b1422}.brand strong{display:block;color:var(--gold-light);font-size:15px}.brand span{display:block;color:var(--muted);font-size:11px;margin-top:3px}
+.back-btn{display:inline-flex;align-items:center;gap:7px;padding:10px 15px;border-radius:12px;border:1px solid var(--gold-border);background:rgba(214,173,85,.08);color:var(--gold-light);font-size:13px;font-weight:bold}
+.hero{position:relative;min-height:330px;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;border-bottom:1px solid var(--border)}.hero-background{position:absolute;inset:0;background:linear-gradient(rgba(4,9,17,.62),rgba(4,9,17,.93)),url("chansons.jpg") center/cover no-repeat}.hero-content{position:relative;z-index:2;width:min(800px,92%);padding:60px 15px}.badge{display:inline-block;padding:8px 14px;margin-bottom:17px;border-radius:50px;color:var(--gold-light);background:rgba(214,173,85,.09);border:1px solid var(--gold-border);font-size:12px;font-weight:bold}.hero h1{font-size:clamp(36px,7vw,60px);color:#fff;margin-bottom:15px}.hero h1 span{color:var(--gold-light)}.hero p{max-width:650px;margin:auto;color:#c1cad8;font-size:15px;line-height:1.75}
+main{width:min(1050px,94%);margin:auto;padding:50px 0 70px}.intro{text-align:center;max-width:750px;margin:0 auto 35px}.intro h2{color:var(--gold-light);font-size:25px;margin-bottom:10px}.intro p{color:var(--muted);line-height:1.7;font-size:14px}
+.section-card{position:relative;padding:25px;margin-bottom:22px;border-radius:24px;background:linear-gradient(145deg,rgba(18,30,48,.96),rgba(10,18,31,.97));border:1px solid var(--border);box-shadow:var(--shadow)}.section-card::before{content:"";position:absolute;top:0;left:0;width:100%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent);opacity:.55}.section-card h2{color:var(--gold-light);font-size:20px;margin-bottom:23px}
+#songs-list{display:grid;gap:16px}.song-card{display:grid;grid-template-columns:70px 1fr auto;align-items:center;gap:17px;padding:18px;border-radius:18px;background:linear-gradient(145deg,rgba(23,38,59,.95),rgba(12,22,37,.96));border:1px solid var(--border);transition:.3s}.song-card:hover{transform:translateY(-3px);border-color:var(--gold-border)}
+.song-cover{width:70px;height:70px;object-fit:cover;border-radius:15px;border:1px solid var(--gold-border);background:#09111f}.song-info h3{color:#fff;font-size:17px;margin-bottom:6px}.song-artist{color:var(--gold-light);font-size:12px;margin-bottom:7px}.song-description{color:var(--muted);font-size:12px;line-height:1.6}
+.song-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:flex-end}.play-btn,.download-btn{display:inline-flex;align-items:center;justify-content:center;gap:6px;padding:10px 13px;border-radius:11px;font-size:12px;font-weight:bold;cursor:pointer;transition:.25s}.play-btn{color:#fff;background:rgba(214,173,85,.12);border:1px solid var(--gold-border)}.download-btn{color:#dff9e8;background:rgba(37,211,102,.09);border:1px solid rgba(37,211,102,.22)}
+.audio-player{display:none;margin-top:15px;padding:14px;border-radius:14px;background:rgba(0,0,0,.20);border:1px solid var(--border);grid-column:1/-1}.audio-player.active{display:block}.audio-player audio{width:100%}
+.empty{text-align:center;padding:30px 20px;color:var(--muted);font-size:14px;border-radius:16px;background:rgba(23,38,59,.50);border:1px dashed var(--gold-border);line-height:1.7}
+footer{text-align:center;padding:30px 20px;border-top:1px solid var(--border);background:rgba(4,9,17,.6);color:var(--muted);font-size:12px}footer strong{display:block;color:var(--gold);margin-bottom:6px}
+@media(max-width:700px){.song-card{grid-template-columns:60px 1fr}.song-cover{width:60px;height:60px}.song-actions{grid-column:1/-1;justify-content:flex-start}}
+</style>
+</head>
+<body>
+<header><div class="header-inner"><a href="index.html" class="brand"><img src="logo.png" alt="Logo"><div><strong>MI.C.L.A</strong><span>Cité de Refuge</span></div></a><a href="index.html" class="back-btn">← Accueil</a></div></header>
+<section class="hero"><div class="hero-background"></div><div class="hero-content"><div class="badge">🎵 MUSIQUE & ADORATION</div><h1>Nos <span>Chansons</span></h1><p>Retrouvez les chants publiés depuis l'admin — lecture complète 3 minutes garantie.</p></div></section>
+<main>
+<div class="intro"><h2>🎶 Bibliothèque musicale</h2><p id="countInfo">Chargement...</p></div>
+<section class="section-card"><h2>🎵 Chansons disponibles</h2><div id="songs-list"></div></section>
+</main>
+<footer><strong>MI.C.L.A — CITÉ DE REFUGE</strong>© <span id="year"></span></footer>
+
+<script>
+function esc(v){return String(v||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+function openDB(){return new Promise((res,rej)=>{const r=indexedDB.open("micla_db",2);r.onupgradeneeded=e=>{const db=e.target.result;if(!db.objectStoreNames.contains("chansons"))db.createObjectStore("chansons",{keyPath:"id"});};r.onsuccess=e=>res(e.target.result);r.onerror=e=>rej(e);});}
+async function getSongsFromDB(){try{const db=await openDB();return await new Promise((res,rej)=>{const req=db.transaction("chansons","readonly").objectStore("chansons").getAll();req.onsuccess=()=>res(req.result||[]);req.onerror=rej;});}catch{return [];}}
+function getSongsFromLocal(){try{const a=JSON.parse(localStorage.getItem("micla_chansons")||"[]");return Array.isArray(a)?a:[];}catch{return [];}}
+
+let blobUrls = {};
+
+async function loadSongs(){
+ const container=document.getElementById("songs-list");
+ const info=document.getElementById("countInfo");
+ let songsDB=await getSongsFromDB();
+ let songsLocal=getSongsFromLocal();
+ let all=[...songsDB];
+ const ids=new Set(songsDB.map(s=>s.id));
+ songsLocal.forEach(s=>{if(!ids.has(s.id)) all.push(s);});
+ if(!all.length){
+  info.textContent="Aucune chanson pour l'instant";
+  container.innerHTML=`<p class="empty">Aucune chanson n'a encore été publiée.</p>`;
+  return;
+ }
+ info.textContent=`${all.length} chanson(s) disponible(s) - lecture complète`;
+ // NE PAS VIDER SI DEJA CHARGE - EVITE LA COUPURE
+ if(container.dataset.loaded==="1") return;
+ container.innerHTML="";
+ container.dataset.loaded="1";
+
+ all.slice().reverse().forEach((song,idx)=>{
+  const title=esc(song.title||"Sans titre");
+  const size=esc(song.size||"");
+  let audioSrc="";
+  if(song.audioBlob){
+   audioSrc=URL.createObjectURL(song.audioBlob);
+   blobUrls[song.id]=audioSrc;
+  }else if(song.audio){
+   audioSrc=song.audio;
+  }
+  const card=document.createElement("article");
+  card.className="song-card";
+  card.innerHTML=`
+   <img class="song-cover" src="logo.png" alt="${title}">
+   <div class="song-info"><h3>${title}</h3><div class="song-artist">🎤 MI.C.L.A ${size?`• ${size}`:""} • 3 min</div><div class="song-description">Lecture complète sans coupure</div></div>
+   <div class="song-actions">
+    ${audioSrc?`<button class="play-btn" onclick="toggleAudio(${idx})">▶ Écouter</button><a href="${audioSrc}" download="${title}.mp3" class="download-btn">↓ Télécharger</a>`:""}
+   </div>
+   ${audioSrc?`<div class="audio-player" id="audio-${idx}"><audio controls preload="auto" src="${audioSrc}" onended="this.closest('.audio-player').classList.remove('active')"></audio></div>`:""}
+  `;
+  container.appendChild(card);
+ });
+}
+
+function toggleAudio(i){
+ const p=document.getElementById("audio-"+i);
+ if(!p) return;
+ const wasActive=p.classList.contains("active");
+ document.querySelectorAll(".audio-player").forEach(e=>{
+  if(e.id!==`audio-${i}`){
+   e.classList.remove("active");
+   const a=e.querySelector("audio");
+   if(a) a.pause();
+  }
+ });
+ if(!wasActive){
+  p.classList.add("active");
+  p.querySelector("audio")?.play();
+ }else{
+  p.classList.remove("active");
+  p.querySelector("audio")?.pause();
+ }
+}
+
+document.getElementById("year").textContent=new Date().getFullYear();
+loadSongs();
+</script>
+</body>
+</html>

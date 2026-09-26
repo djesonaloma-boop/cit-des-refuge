@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Protocole & Sécurité | MI.C.L.A</title>
+<style>
+:root{--navy:#06152d;--navy-light:#0b2345;--gold:#d4af37;--gold-light:#f1d675;--text:#eaf1ff;--muted:#aebbd0;--border:rgba(212,175,55,0.25);--shadow:0 15px 40px rgba(0,0,0,0.35);}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,sans-serif;background:radial-gradient(circle at top,#12325e 0%,var(--navy) 45%,#020b18 100%);color:var(--text);min-height:100vh}a{text-decoration:none;color:inherit}
+header{position:sticky;top:0;z-index:1000;background:rgba(3,14,30,0.96);border-bottom:1px solid var(--border);backdrop-filter:blur(12px)}.header-inner{max-width:1200px;margin:auto;min-height:75px;padding:10px 18px;display:flex;align-items:center;justify-content:space-between}
+.brand{display:flex;align-items:center;gap:12px}.brand img{width:48px;height:48px;border-radius:50%;border:1px solid var(--gold);background:white}.brand strong{display:block;color:var(--gold-light);font-size:18px}.brand span{display:block;color:var(--muted);font-size:9px;margin-top:3px}
+.back-btn{border:1px solid var(--border);background:var(--navy-light);color:var(--gold-light);padding:10px 15px;border-radius:30px;font-weight:bold}
+.hero{min-height:350px;display:flex;align-items:center;justify-content:center;text-align:center;padding:60px 20px;background:linear-gradient(rgba(3,14,30,0.72),rgba(3,14,30,0.94)),url("protocole.jpg") center/cover}.hero-content{max-width:850px}.badge{display:inline-block;padding:8px 18px;border:1px solid var(--gold);border-radius:30px;color:var(--gold-light);font-size:13px;margin-bottom:18px}.hero h1{font-size:clamp(32px,7vw,62px);color:white;margin-bottom:15px}.hero h1 span{color:var(--gold)}.hero p{color:#d7e1f2;line-height:1.7;max-width:750px;margin:auto}
+main{width:min(1150px,92%);margin:50px auto}.section-title{text-align:center;margin-bottom:30px}.section-title h2{color:var(--gold-light);font-size:30px;margin-bottom:10px}.section-title p{color:var(--muted);line-height:1.7}
+.table-container{width:100%;overflow-x:auto;border-radius:18px;border:1px solid var(--border);box-shadow:var(--shadow)}table{width:100%;min-width:850px;border-collapse:collapse;background:rgba(5,20,42,0.95)}thead{background:linear-gradient(135deg,#123c72,#0b2345)}th{color:var(--gold-light);font-size:14px;padding:17px 14px;text-align:left;border-bottom:1px solid var(--gold)}td{padding:16px 14px;color:#dce6f7;border-bottom:1px solid rgba(255,255,255,0.07);font-size:14px}tbody tr:hover{background:rgba(212,175,55,0.07)}.jour{color:var(--gold-light);font-weight:bold}.heure{color:white;font-weight:bold}.responsable{color:var(--gold-light)}
+.important{margin-top:40px;padding:30px;border-radius:22px;border:1px solid var(--gold);background:linear-gradient(135deg,rgba(212,175,55,0.14),rgba(6,21,45,0.96))}.important h2{color:var(--gold-light);text-align:center;margin-bottom:20px}.important-message{max-width:850px;margin:auto;padding:20px;border-radius:15px;background:rgba(0,0,0,0.2);text-align:center;color:white;line-height:1.8}.important-message strong{color:var(--gold-light)}
+.annonce{margin-top:40px;padding:25px;border-radius:20px;border:1px solid var(--border);background:rgba(11,35,69,0.7);text-align:center}.annonce h3{color:var(--gold-light);margin-bottom:10px}.annonce p{color:var(--muted);line-height:1.7;white-space:pre-line}
+footer{margin-top:70px;padding:35px 20px;text-align:center;background:#020b18;border-top:1px solid var(--border)}footer strong{color:var(--gold)}
+</style>
+</head>
+<body>
+<header><div class="header-inner"><a href="index.html" class="brand"><img src="logo.png" alt="Logo"><div><strong>MI.C.L.A</strong><span>MINISTÈRE DES CHRÉTIENS POUR LIBÉRER LES ÂMES</span></div></a><a href="index.html" class="back-btn">← Accueil</a></div></header>
+
+<section class="hero"><div class="hero-content"><div class="badge">✦ Protocole & Sécurité</div><h1>Protocole <span>& Sécurité</span></h1><p>Organisation, accueil et sécurité pour MI.C.L.A — Cité de Refuge.</p></div></section>
+
+<main>
+<div class="section-title"><h2>📋 Programme du Protocole & Sécurité</h2><p>Modifiable depuis admin → Protocole & Sécurité</p></div>
+<div class="table-container"><table><thead><tr><th>Jour</th><th>Activité</th><th>Heure</th><th>Responsable</th><th>Observation</th></tr></thead><tbody id="programmeTable"></tbody></table></div>
+
+<section class="important"><h2>⚠️ Consigne importante</h2><div class="important-message"><strong>Tous les membres du protocole et de la sécurité doivent venir avant l'heure prévue.</strong><br><br>Chaque membre doit être présent tôt pour préparer son service.<br><br><strong>Tous doivent rester jusqu'à la fin du service.</strong></div></section>
+
+<section id="annonceSection" class="annonce" style="display:none;"><h3>📣 Annonce du protocole & sécurité</h3><p id="annonceText"></p></section>
+</main>
+
+<footer><strong>MI.C.L.A — CITÉ DE REFUGE</strong><br>© <span id="year"></span></footer>
+
+<script>
+const defaultData=[
+{jour:"Lundi",activite:"Une heure avec Jésus",heure:"17h00 – 18h00",responsable:"À définir",observation:"Présence avant"},
+{jour:"Mardi",activite:"Partage biblique",heure:"17h00 – 18h00",responsable:"À définir",observation:"Accueil"},
+{jour:"Mercredi",activite:"Culte d'enseignement",heure:"17h30 – 19h30",responsable:"À définir",observation:"Arriver avant"},
+{jour:"Jeudi",activite:"Intercession",heure:"17h00 – 18h00",responsable:"À définir",observation:"Préparation"},
+{jour:"Vendredi",activite:"Combat spirituel",heure:"17h30 – 19h30",responsable:"À définir",observation:"Jusqu'à la fin"},
+{jour:"Samedi",activite:"Jeunesse",heure:"16h30 – 17h30",responsable:"À définir",observation:"Avant 16h30"},
+{jour:"Dimanche",activite:"Adoration",heure:"07h30 – 10h30",responsable:"À définir",observation:"Obligatoire avant"}
+];
+function esc(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;");}
+function getData(){try{const d=JSON.parse(localStorage.getItem("micla_protocole")||"[]");return (Array.isArray(d)&&d.length)?d:defaultData;}catch{return defaultData;}}
+function render(){
+ const data=getData();
+ document.getElementById("programmeTable").innerHTML=data.map(r=>`<tr><td class="jour">${esc(r.jour)}</td><td>${esc(r.activite)}</td><td class="heure">${esc(r.heure)}</td><td class="responsable">${esc(r.responsable||"À définir")}</td><td>${esc(r.observation||"")}</td></tr>`).join('');
+ const annonce=(localStorage.getItem("micla_protocole_annonce")||"").trim();
+ const sec=document.getElementById("annonceSection");
+ const txt=document.getElementById("annonceText");
+ if(!annonce){sec.style.display="none";}else{txt.textContent=annonce;sec.style.display="block";}
+}
+document.getElementById("year").textContent=new Date().getFullYear();
+render();
+window.addEventListener("storage",render);
+setInterval(render,2000);
+</script>
+</body>
+</html>

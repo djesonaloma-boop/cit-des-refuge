@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Actualités — MI.C.L.A Cité de Refuge</title>
+<style>
+:root{--navy:#061426;--navy-light:#0b1f38;--blue:#12365f;--gold:#d4af37;--gold-light:#f0d675;--white:#fff;--text:#e8edf5;--muted:#aab7c8;--border:rgba(212,175,55,.25);}
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at top,rgba(18,54,95,.35),transparent 45%),var(--navy);color:var(--text);line-height:1.6}
+a{text-decoration:none;color:inherit}
+header{position:sticky;top:0;z-index:1000;height:72px;background:rgba(6,20,38,.96);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center}
+.back{position:absolute;left:18px;color:var(--gold-light);font-weight:bold;font-size:14px}
+.brand{display:flex;align-items:center;gap:12px}.brand img{width:44px;height:44px;object-fit:contain}.brand strong{display:block;color:var(--gold-light);font-size:17px;letter-spacing:1px}.brand span{display:block;color:var(--muted);font-size:9px;letter-spacing:1px}
+.hero{text-align:center;padding:70px 20px 50px;background:linear-gradient(rgba(6,20,38,.70),rgba(6,20,38,.94)),url("assets/images/actualites.jpg") center/cover no-repeat;border-bottom:1px solid var(--border)}
+.badge{display:inline-block;border:1px solid var(--gold);color:var(--gold-light);border-radius:30px;padding:7px 16px;font-size:12px;margin-bottom:18px}
+.hero h1{font-size:clamp(32px,7vw,52px)}.hero h1 span{color:var(--gold-light)}.hero p{max-width:700px;margin:10px auto 0;color:var(--muted);font-size:15px}
+.container{width:min(1100px,92%);margin:auto;padding:45px 0}
+.section-title{text-align:center;margin-bottom:30px}.section-title h2{color:var(--gold-light);font-size:27px}.section-title p{color:var(--muted);font-size:14px}
+.news{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.news-card{overflow:hidden;background:linear-gradient(145deg,rgba(18,54,95,.75),rgba(6,20,38,.95));border:1px solid var(--border);border-radius:18px;box-shadow:0 12px 30px rgba(0,0,0,.22);transition:.2s}
+.news-card:hover{transform:translateY(-4px);border-color:var(--gold)}
+.news-image{width:100%;height:190px;object-fit:cover;display:block;background:var(--navy-light)}
+.news-content{padding:20px}.news-date{color:var(--gold-light);font-size:12px;margin-bottom:8px}.news-card h3{color:var(--white);margin-bottom:10px}.news-card p{color:var(--muted);font-size:13px;line-height:1.6}
+.empty{text-align:center;padding:40px;color:var(--muted);border:1px dashed var(--border);border-radius:16px}
+.notice{margin-top:45px;padding:25px;text-align:center;border:1px solid var(--border);border-radius:16px;background:rgba(212,175,55,.05)}.notice h3{color:var(--gold-light);margin-bottom:8px}.notice p{color:var(--muted);font-size:13px}
+footer{text-align:center;padding:30px 20px;background:#040e1b;border-top:1px solid var(--border)}footer strong{color:var(--gold-light)}footer p{color:var(--muted);font-size:12px;margin-top:5px}
+@media(max-width:850px){.news{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:600px){header{height:64px}.brand img{width:38px;height:38px}.brand strong{font-size:14px}.brand span{font-size:7px}.news{grid-template-columns:1fr}.hero{padding:50px 18px 40px}}
+</style>
+</head>
+<body>
+<header><a href="index.html" class="back">← Accueil</a><div class="brand"><img src="logo.png" alt="Logo"><div><strong>MI.C.L.A</strong><span>MINISTÈRE DES CHRÉTIENS POUR LIBÉRER LES ÂMES</span></div></div></header>
+<section class="hero"><div class="badge">✦ VIE DE L'ÉGLISE</div><h1><span>Actualités</span></h1><p>Découvrez les informations, annonces et événements de MI.C.L.A — Cité de Refuge.</p></section>
+<main class="container">
+<div class="section-title"><h2>Dernières actualités</h2><p>Restez informé — quand l'admin publie, ça apparaît ici direct.</p></div>
+<div id="news" class="news"></div>
+<div id="empty" class="empty">Aucune actualité n'a encore été publiée.<br><small>Va dans admin.html → Actualités → Publier</small></div>
+<section class="notice"><h3>📢 Restez connectés</h3><p>Les nouvelles informations seront publiées régulièrement ici. Ça s'appuie et ça marche direct depuis l'admin.</p></section>
+</main>
+<footer><strong>MI.C.L.A — CITÉ DE REFUGE</strong><p>Ministère des Chrétiens pour Libérer les Âmes</p><p>© 2026 — Tous droits réservés</p></footer>
+
+<script>
+const newsContainer = document.getElementById("news");
+const empty = document.getElementById("empty");
+
+function afficherActualites(){
+  let actualites;
+  try{ actualites = JSON.parse(localStorage.getItem("micla_actualites") || "[]"); }
+  catch{ actualites = []; }
+  
+  newsContainer.innerHTML = "";
+  
+  if(!actualites.length){
+    empty.style.display = "block";
+    return;
+  }
+  empty.style.display = "none";
+
+  actualites.forEach(a=>{
+    const card = document.createElement("article");
+    card.className = "news-card";
+    card.innerHTML = `
+      ${a.image ? `<img class="news-image" src="${a.image}" alt="">` : `<div class="news-image" style="display:flex;align-items:center;justify-content:center;font-size:40px">📢</div>`}
+      <div class="news-content">
+        <div class="news-date">${escapeHTML(a.date||'Actualité')}</div>
+        <h3>${escapeHTML(a.title||'Actualité')}</h3>
+        <p>${escapeHTML(a.description||'')}</p>
+      </div>
+    `;
+    newsContainer.appendChild(card);
+  });
+}
+
+function escapeHTML(v){
+  return String(v).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;").replace(/'/g,"&#039;");
+}
+
+afficherActualites();
+window.addEventListener("storage", afficherActualites);
+
+// Test auto : si tu publies dans admin dans même navigateur, ça s'actualise sans recharger
+setInterval(afficherActualites, 2000);
+</script>
+</body>
+</html>

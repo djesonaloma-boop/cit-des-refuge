@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MI.C.L.A — Espace Administration</title>
+<style>
+:root{--navy:#06152f;--navy2:#0b2145;--blue:#123d78;--gold:#d4af37;--gold2:#f4d875;--white:#fff;--text:#eaf0ff;--muted:#aebbd4;--danger:#e74c3c;--success:#20c997;--border:rgba(212,175,55,.25);}
+*{box-sizing:border-box;margin:0;padding:0}body{font-family:Arial,Helvetica,sans-serif;background:radial-gradient(circle at top right,rgba(18,61,120,.35),transparent 35%),var(--navy);color:var(--text);min-height:100vh}button,input,textarea,select{font:inherit}button{cursor:pointer}.container{width:min(1200px,94%);margin:auto}
+#loginPage{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}.login-box{width:min(430px,100%);background:linear-gradient(145deg,var(--navy2),var(--navy));border:1px solid var(--border);border-radius:24px;padding:30px;box-shadow:0 20px 60px rgba(0,0,0,.4);text-align:center}.login-logo{width:85px;height:85px;border-radius:50%;object-fit:cover;border:3px solid var(--gold);margin-bottom:15px}.login-box h1{color:var(--gold2);font-size:24px;margin-bottom:6px}.login-box p{color:var(--muted);font-size:13px;line-height:1.5;margin-bottom:25px}.login-box input{width:100%;padding:15px;border-radius:12px;border:1px solid rgba(255,255,255,.12);background:#071a38;color:#fff;outline:none;margin-bottom:12px}#loginError{color:#ff8f84;font-size:13px;min-height:20px;margin-bottom:10px}
+.btn{border:0;border-radius:12px;padding:12px 17px;font-weight:bold;transition:.2s}.btn:hover{transform:translateY(-1px)}.primary{background:linear-gradient(135deg,var(--gold),#b99220);color:#111}.secondary{background:var(--blue);color:#fff;border:1px solid rgba(255,255,255,.1)}.danger{background:rgba(231,76,60,.13);color:#ff958b;border:1px solid rgba(231,76,60,.3)}.success{background:rgba(32,201,151,.13);color:#65e2bd;border:1px solid rgba(32,201,151,.3)}
+#adminPage{display:none}header{position:sticky;top:0;z-index:1000;background:rgba(6,21,47,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}.header-inner{min-height:75px;display:flex;align-items:center;justify-content:space-between;gap:15px}.brand{display:flex;align-items:center;gap:12px}.brand img{width:48px;height:48px;border-radius:50%;object-fit:cover;border:2px solid var(--gold)}.brand h1{font-size:17px;color:var(--gold2)}.brand p{color:var(--muted);font-size:11px;margin-top:3px}.header-actions{display:flex;gap:8px}.icon-btn{width:42px;height:42px;border-radius:12px;background:var(--navy2);color:#fff;border:1px solid var(--border)}
+main{padding:30px 0 60px}.dashboard-title{text-align:center;margin-bottom:30px}.dashboard-title.badge{display:inline-block;padding:7px 14px;border-radius:30px;background:rgba(212,175,55,.12);border:1px solid var(--border);color:var(--gold2);font-size:12px;margin-bottom:12px}.dashboard-title h2{font-size:clamp(26px,6vw,40px);margin-bottom:8px}.dashboard-title p{color:var(--muted);line-height:1.6}
+.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:28px}.stat{background:linear-gradient(145deg,var(--navy2),var(--navy));border:1px solid var(--border);border-radius:16px;padding:18px;text-align:center}.stat strong{display:block;color:var(--gold2);font-size:27px;margin-bottom:5px}.stat span{color:var(--muted);font-size:12px}
+.menu-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:15px}.menu-card{min-height:125px;border-radius:18px;border:1px solid var(--border);background:linear-gradient(145deg,var(--navy2),var(--navy));color:#fff;padding:20px 14px;text-align:center;transition:.25s}.menu-card:hover{border-color:var(--gold);transform:translateY(-4px)}.menu-icon{font-size:32px;display:block;margin-bottom:10px}.menu-card strong{display:block;color:var(--gold2);font-size:14px}.menu-card small{color:var(--muted);font-size:11px;display:block;margin-top:5px}
+.view{display:none}.view.active{display:block}.section-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:20px}.section-head h2{color:var(--gold2)}.section-head p{color:var(--muted);font-size:13px}
+.card{background:linear-gradient(145deg,var(--navy2),var(--navy));border:1px solid var(--border);border-radius:18px;padding:20px;margin-bottom:18px}.card h3{color:var(--gold2);margin-bottom:17px}
+.form-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px}.form-group{display:flex;flex-direction:column;gap:7px}.full{grid-column:1/-1}label{color:var(--gold2);font-size:12px;font-weight:bold}input,textarea,select{width:100%;padding:12px 13px;border-radius:11px;border:1px solid rgba(255,255,255,.12);background:#071a38;color:#fff;outline:none}input:focus,textarea:focus,select:focus{border-color:var(--gold)}textarea{min-height:100px;resize:vertical}
+.file-box{background:#071a38;border:1px dashed rgba(212,175,55,.45);border-radius:14px;padding:14px}.file-box input[type="file"]{border:0;background:transparent;padding:5px 0}.file-name{color:var(--muted);font-size:11px;margin-top:7px;word-break:break-word}.preview-image{max-width:180px;max-height:130px;border-radius:12px;margin-top:10px;display:none;border:1px solid var(--border)}.preview-audio{width:100%;margin-top:10px;display:none}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px}
+.table-wrap{overflow-x:auto;border-radius:14px;border:1px solid rgba(255,255,255,.08)}table{width:100%;border-collapse:collapse;min-width:800px}th{background:#0e2c59;color:var(--gold2);padding:13px;text-align:left;font-size:12px}td{padding:12px;border-top:1px solid rgba(255,255,255,.07);color:#dce5f8;font-size:12px}td input{min-width:110px;padding:8px;font-size:12px}.empty{text-align:center;color:var(--muted);padding:25px}
+.notice{padding:13px 15px;border-radius:12px;background:rgba(212,175,55,.08);border:1px solid var(--border);color:#e8d58a;font-size:12px;margin-bottom:18px}.status{display:none;padding:13px;border-radius:12px;margin-bottom:15px;font-size:13px}.status.show{display:block}.status.ok{background:rgba(32,201,151,.12);color:#65e2bd;border:1px solid rgba(32,201,151,.3)}.status.err{background:rgba(231,76,60,.12);color:#ff958b;border:1px solid rgba(231,76,60,.3)}
+@media(max-width:900px){.menu-grid{grid-template-columns:repeat(3,1fr)}.stats{grid-template-columns:repeat(2,1fr)}}@media(max-width:650px){.menu-grid{grid-template-columns:repeat(2,1fr)}.form-grid{grid-template-columns:1fr}.full{grid-column:auto}.brand p{display:none}.brand h1{font-size:14px}}
+</style>
+</head>
+<body>
+<section id="loginPage">
+<div class="login-box"><img src="logo.png" class="login-logo" alt="Logo" onerror="this.style.display='none'"><h1>MI.C.L.A</h1><p>CITÉ DE REFUGE<br>Espace Administration</p><input type="password" id="adminCode" placeholder="Code administrateur"><div id="loginError"></div><button class="btn primary" style="width:100%" onclick="connexionAdmin()">🔐 Accéder à l'administration</button></div>
+</section>
+<div id="adminPage">
+<header><div class="container header-inner"><div class="brand"><img src="logo.png" alt="Logo" onerror="this.style.display='none'"><div><h1>MI.C.L.A — ADMIN</h1><p>Gestion complète du site</p></div></div><div class="header-actions"><button class="icon-btn" onclick="retourDashboard()">🏠</button><button class="icon-btn" onclick="deconnexion()">🚪</button></div></div></header>
+<main><div class="container">
+<section id="dashboard" class="view active">
+<div class="dashboard-title"><div class="badge">✦ ADMINISTRATION</div><h2>Tableau de bord</h2><p>Auto-save activé partout</p></div>
+<div class="stats"><div class="stat"><strong id="statChantres">0</strong><span>Chantres</span></div><div class="stat"><strong id="statChansons">0</strong><span>Chansons</span></div><div class="stat"><strong id="statActivites">0</strong><span>Activités</span></div><div class="stat"><strong id="statAffiches">0</strong><span>Affiches</span></div><div class="stat"><strong id="statGalerie">0</strong><span>Galerie</span></div><div class="stat"><strong id="statMessages">0</strong><span>Messages</span></div><div class="stat"><strong id="statActualites">0</strong><span>Actualités</span></div><div class="stat"><strong id="statSupport">0</strong><span>Demandes</span></div></div>
+<div class="menu-grid">
+<button class="menu-card" onclick="openView('site')"><span class="menu-icon">🏠</span><strong>Accueil / Site</strong><small>Auto</small></button>
+<button class="menu-card" onclick="openView('programme')"><span class="menu-icon">📅</span><strong>Programme</strong><small>Auto</small></button>
+<button class="menu-card" onclick="openView('activites')"><span class="menu-icon">🎯</span><strong>Activités</strong><small>Auto</small></button>
+<button class="menu-card" onclick="openView('chantres')"><span class="menu-icon">🎤</span><strong>Chantres</strong></button>
+<button class="menu-card" onclick="openView('chansons')"><span class="menu-icon">🎵</span><strong>Chansons</strong><small>3min complet</small></button>
+<button class="menu-card" onclick="openView('affiches')"><span class="menu-icon">🖼️</span><strong>Affiches</strong></button>
+<button class="menu-card" onclick="openView('galerie')"><span class="menu-icon">📸</span><strong>Galerie</strong></button>
+<button class="menu-card" onclick="openView('messages')"><span class="menu-icon">📖</span><strong>Messages</strong></button>
+<button class="menu-card" onclick="openView('actualites')"><span class="menu-icon">📢</span><strong>Actualités</strong></button>
+<button class="menu-card" onclick="openView('jeunesse')"><span class="menu-icon">👥</span><strong>Jeunesse</strong><small>Vocal WhatsApp + Auto</small></button>
+<button class="menu-card" onclick="openView('protocole')"><span class="menu-icon">🛡️</span><strong>Protocole & Sécurité</strong><small>Auto</small></button>
+<button class="menu-card" onclick="openView('pasteur')"><span class="menu-icon">🙏</span><strong>Pasteur</strong><small>Auto</small></button>
+<button class="menu-card" onclick="openView('berger')"><span class="menu-icon">🤝</span><strong>Berger</strong><small>Auto</small></button>
+<button class="menu-card" onclick="openView('support')"><span class="menu-icon">💬</span><strong>Support</strong></button>
+<button class="menu-card" onclick="openView('contacts')"><span class="menu-icon">📞</span><strong>Contacts</strong><small>Auto</small></button>
+<button class="menu-card" onclick="openView('localisation')"><span class="menu-icon">📍</span><strong>Localisation</strong><small>Auto</small></button>
+</div>
+</section>
+
+<section id="site" class="view"><div class="section-head"><div><h2>🏠 Accueil / Site — Auto-save</h2></div><button class="btn secondary" onclick="retourDashboard()">←</button></div><div id="siteStatus" class="status"></div><div class="card"><h3>✦ Modifier l'Accueil (auto)</h3><div class="form-grid"><div class="form-group"><label>Badge Hero</label><input id="idxBadge"></div><div class="form-group"><label>Titre principal</label><input id="idxTitle"></div><div class="form-group"><label>Sous-titre</label><input id="idxSubtitle"></div><div class="form-group full"><label>Description Hero</label><textarea id="idxDesc"></textarea></div><div class="form-group"><label>Verset</label><input id="idxVerseText"></div><div class="form-group"><label>Référence</label><input id="idxVerseRef"></div><div class="form-group full"><label>Titre Bienvenue</label><input id="idxWelcomeTitle"></div><div class="form-group full"><label>Texte Bienvenue</label><textarea id="idxWelcomeText"></textarea></div></div></div></section>
+
+<section id="programme" class="view"><div class="section-head"><div><h2>📅 Programme — Auto-save</h2></div><button class="btn secondary" onclick="retourDashboard()">←</button></div><div id="programmeStatus" class="status"></div><div class="card"><div class="table-wrap"><table><thead><tr><th>Jour</th><th>Activité</th><th>Heure</th><th>Prédicateur</th><th>Modérateur</th><th>Action</th></tr></thead><tbody id="programmeBody"></tbody></table></div><div class="actions"><button class="btn secondary" onclick="addProgrammeRow()">＋ Ajouter</button></div></div></section>
+
+<section id="activites" class="view"><div class="section-head"><div><h2>🎯 Activités</h2></div><button class="btn secondary" onclick="retourDashboard()">←</button></div><div class="card"><div class="form-grid"><div class="form-group"><label>Titre</label><input id="actTitle"></div><div class="form-group"><label>Date</label><input id="actDate" type="date"></div><div class="form-group"><label>Heure</label><input id="actTime"></div><div class="form-group"><label>Lieu</label><input id="actLocation"></div><div class="form-group full"><label>Description</label><textarea id="actDescription"></textarea></div><div class="form-group full"><label>📁 Photo</label><div class="file-box"><input type="file" id="actImage" accept="image/*" onchange="previewImageFile(this,'actImagePreview','actImageName')"><div id="actImageName" class="file-name">Aucun</div><img id="actImagePreview" class="preview-image"></div></div></div><div class="actions"><button class="btn primary" onclick="addActivity()">＋ Ajouter</button></div></div><div class="card"><div class="table-wrap"><table><thead><tr><th>Titre</th><th>Date</th><th>Heure</th><th>Lieu</th><th>Action</th></tr></thead><tbody id="activitiesBody"></tbody></table></div></div></section>
+
+<section id="chantres" class="view"><div class="section-head"><div><h2>🎤 Chantres</h2></div><button class="btn secondary" onclick="retourDashboard()">←</button></div><div class="card"><div class="form-grid"><div class="form-group"><label>Nom</label><input id="chantreName"></div><div class="form-group"><label>Rôle</label><input id="chantreRole"></div><div class="form-group"><label>WhatsApp</label><input id="chantrePhone"></div><div class="form-group"><label>📁 Photo</label><div class="file-box"><input type="file" id="chantrePhoto" accept="image/*" onchange="previewImageFile(this,'chantrePhotoPreview','chantrePhotoName')"><div id="chantrePhotoName" class="file-name">Aucun</div><img id="chantrePhotoPreview" class="preview-image"></div></div></div><div class="actions"><button class="btn primary" onclick="addChantre()">＋ Ajouter</button></div></div><div class="card"><div class="table-wrap"><table><thead><tr><th>Nom</th><th>Rôle</th><th>Contact</th><th>Photo</th><th>Actions</th></tr></thead><tbody id="chantresBody"></tbody></table></div></div></section>
+
+<section id="chansons" class="view"><div class="section-head"><div><h2>🎵 Chansons — Blob complet 3min</h2></div><button class="btn secondary" onclick="retourDashboard()">←</button></div><div id="chansonsStatus" class="status"></div><div class="card"><h3>Ajouter une chanson</h3><div class="notice">Blob réel — va chanter jusqu'à la fin (3 min)</div><div class="form-grid"><div class="form-group full"><label>📁 Importer la chanson</label><div class="file-box"><input type="file" id="songAudio" accept="audio/*" onchange="previewAudioFileBlob(this,'songAudioPreview','songAudioName')"><div id="songAudioName" class="file-name">Aucun</div><audio id="songAudioPreview" class="preview-audio" controls></audio></div></div></div><div class="actions"><button class="btn primary" onclick="addSong()">🎵 Envoyer la chanson</button></div></div><div class="card"><div class="table-wrap"><table><thead><tr><th>Titre</th><th>Taille</th><th>Audio</th><th>Actions</th></tr></thead><tbody id="songsBody"></tbody></table></div></div></section>
+
+<section id="affiches" class="view"><div class="section-head"><div><h2>🖼️ Affiches</h2></div><button class="btn secondary" onclick="retourDashboard()">←</button></div><div class="card"><div class="form-grid"><div class="form-group"><label>Titre</label><input id="afficheTitle"></div><div class="form-group"><label>Date</label><input id="afficheDate" type="date"></div><div class="form-group"><label>Heure</label><input id="afficheTime"></div><div class="form-group"><label>Lieu</label><input id="afficheLocation"></div><div class="form-group full"><label>Description</label><textarea id="afficheDescription"></textarea></div><div class="form-group full"><label>📁 Affiche</label><div class="file-box"><input type="file" id="afficheImage" accept="image/*" onchange="previewImageFile(this,'afficheImagePreview','afficheImageName')"><div id="afficheImageName" class="file-name">Aucun</div><img id="afficheImagePreview" class="preview-image"></div></div></div><div class="actions"><button class="btn primary" onclick="addAffiche()">＋ Ajouter</button></div></div><div class="card"><div class="table-wrap"><table><thead><tr><th>Titre</th><th>Date</th><th>Lieu</th><th>Actions</th></tr></thead><tbody id="affichesBody"></tbody></table></div></div></section>
+
+<section id="galerie" class="view"><div class="section-head"><div><h2>📸 Galerie</h2></div><button class="btn secondary" onclick="retourDashboard()">←</button></div><div class="card"><div class="form-grid"><div class="form-group"><label>Titre</label><input id="galerieTitle"></div><div class="form-group full"><label>Description</label><textarea id="galerieDescription"></textarea></div><div class="form-group full"><label>📁 Photo</label><div class="file-box"><input type="file" id="galerieImage" accept="image/*" onchange="previewImageFile(this,'galerieImagePreview','galerieImageName')"><div id="galerieImageName" class="file-name">Aucun</div><img id="galerieImagePreview" class="preview-image"></div></div></div><div class="actions"><button class="btn primary" onclick="addGalerie()">＋ Ajouter</button></div></div><div class="card"><div class="table-wrap"><table><thead><tr><th>Titre</th><th>Photo</th><th>Actions</th></tr></thead><tbody id="galerieBody"></tbody></table></div></div></section>
+
+<section id="messages" class="view"><div class="section-head"><div><h2>📖 Messages</h2></div><button class="btn secondary" onclick="retourDashboard()">←</button></div><div class="card"><div class="form-grid"><div class="form-group"><label>Titre</label><input id="msgTitle"></div><div class="form-group"><label>Auteur</label><input id="msgAuthor"></div><div class="form-group"><label>Date</label><input id="msgDate" type="date"></div><div class="form-group full"><label>Description</label><textarea id="msgDescription"></textarea></div><div class="form-group full"><label>📁 Audio</label><div class="file-box"><input type="file" id="msgAudio" accept="audio/*" onchange="previewAudioFile(this,'msgAudioPreview','msgAudioName')"><div id="msgAudioName" class="file-name">Aucun</div><audio id="msgAudioPreview" class="preview-audio" controls></audio></div></div></div><div class="actions"><button class="btn primary" onclick="addMessage()">＋ Ajouter</button></div></div><div class="card"><div class="table-wrap"><table><thead><tr><th>Titre</th><th>Auteur</th><th>Date</th><th>Actions</th></tr></thead><tbody id="messagesBody"></tbody></table></div></div></section>
+
+<section id="actualites" class="view"><div class="section-head"><div><h2>📢 Actualités</h2></div><button class="btn secondary" onclick="retourDashboard()">←</button></div><div class="card"><div class="form-grid"><div class="form-group"><label>Titre</label><input id="newsTitle"></div><div class="form-group"><label>Date</label><input id="newsDate" type="date"></div><div class="form-group full"><label>Description</label><textarea id="newsDescription"></textarea></div><div class="form-group full"><label>📁 Photo</label><div class="file-box"><input type="file" id="newsImage" accept="image/*" onchange="previewImageFile(this,'newsImagePreview','newsImageName')"><div id="newsImageName" class="file-name">Aucun</div><img id="newsImagePreview" class="preview-image"></div></div></div><div class="actions"><button class="btn primary" onclick="addActualite()">＋ Publier</button></div></div><div class="card"><div class="table-wrap"><table><thead><tr><th>Titre</th><th>Date</th><th>Actions</th></tr></thead><tbody id="actualitesBody"></tbody></table></div></div></section>
+
+<section id="jeunesse" class="view">
+<div class="section-head"><div><h2>👥 Jeunesse — Vocal WhatsApp + Auto-save</h2><p>Tape et ça enregistre seul</p></div><button class="btn secondary" onclick="retourDashboard()">←</button></div>
+<div id="jeunesseStatus" class="status"></div>
+
+<div class="card"><h3>🖼️ Photo principale</h3>
+<div class="form-grid"><div class="form-group full"><label>📁 Photo principale</label><div class="file-box"><input type="file" id="youthPhoto" accept="image/*" onchange="previewImageFile(this,'youthPhotoPreview','youthPhotoName')"><div id="youthPhotoName" class="file-name">Aucun</div><img id="youthPhotoPreview" class="preview-image"></div></div></div>
+<div class="actions"><button class="btn primary" onclick="saveYouthPhoto()">💾 Enregistrer la photo</button><button class="btn danger" onclick="delYouthPhoto()">Supprimer</button></div>
+</div>
+
+<div class="card"><h3>💬 Textes jeunesse — Auto-save</h3>
+<div class="form-grid">
+<div class="form-group full"><label>Message de la jeunesse</label><textarea id="youthMessage" placeholder="Tape et ça s'enregistre seul"></textarea></div>
+<div class="form-group full"><label>🙏 Prière / Exhortation</label><textarea id="youthPrayer" placeholder="Auto-save"></textarea></div>
+<div class="form-group full"><label>📢 Note finale</label><textarea id="youthNote" placeholder="Auto-save"></textarea></div>
+<div class="form-group"><label>🎤 Prédicateur semaine</label><input id="youthPreacher" placeholder="Auto-save"></div>
+<div class="form-group"><label>🎙️ Modérateur semaine</label><input id="youthModerator" placeholder="Auto-save"></div>
+<div class="form-group"><label>📖 Verset / Pensée</label><input id="youthVerse" placeholder="Auto-save"></div>
+<div class="form-group"><label>Référence</label><input id="youthVerseReference" placeholder="Auto-save"></div>
+</div>
+<div class="notice">✅ Tout s'enregistre automatiquement après 1 seconde — pas besoin de bouton</div>
+</div>
+
+<div class="card"><h3>📢 Annonces jeunesse</h3>
+<div class="form-grid"><div class="form-group"><label>Titre</label><input id="youthAnnTitle"></div><div class="form-group"><label>Date</label><input id="youthAnnDate" type="date"></div><div class="form-group full"><label>Contenu</label><textarea id="youthAnnText"></textarea></div></div>
+<div class="actions"><button class="btn primary" onclick="addYouthAnn()">＋ Ajouter annonce</button></div>
+<div class="table-wrap" style="margin-top:15px"><table><thead><tr><th>Titre</th><th>Date</th><th>Contenu</th><th>Action</th></tr></thead><tbody id="youthAnnBody"></tbody></table></div>
+</div>
+
+<div class="card"><h3>🎙️ Messages vocaux — Comme WhatsApp</h3>
+<div style="background:#071a38;border:1px solid var(--border);border-radius:14px;padding:18px;text-align:center;margin-bottom:15px">
+<div id="recStatus" style="color:var(--muted);font-size:13px;margin-bottom:12px">Appuie sur 🎤 pour commencer</div>
+<div id="recTimer" style="color:var(--gold2);font-size:32px;font-weight:bold;margin-bottom:15px">00:00</div>
+<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap">
+<button id="recBtn" class="btn primary" onclick="startYouthRecord()" style="background:#e74c3c;color:white">🎤 Enregistrer vocal</button>
+<button id="stopBtn" class="btn danger" onclick="stopYouthRecord()" style="display:none">⏹️ Stop</button>
+<button id="playBtn" class="btn secondary" onclick="playYouthRecord()" style="display:none">▶️ Écouter</button>
+</div>
+<audio id="recordPreview" controls style="width:100%;margin-top:15px;display:none"></audio>
+<div class="file-name" id="recordName" style="margin-top:8px"></div>
+</div>
+<div class="form-grid"><div class="form-group"><label>Titre vocal</label><input id="youthAudioTitle" placeholder="Ex: Exhortation du samedi"></div><div class="form-group"><label>Auteur</label><input id="youthAudioAuthor" placeholder="Ex: Fr Chadrack"></div><div class="form-group full"><label>📁 Ou importer un fichier</label><div class="file-box"><input type="file" id="youthAudioFile" accept="audio/*" onchange="previewAudioFileBlob(this,'youthAudioPreview','youthAudioName')"><div id="youthAudioName" class="file-name">Aucun</div><audio id="youthAudioPreview" class="preview-audio" controls></audio></div></div></div>
+<div class="actions"><button class="btn primary" onclick="addYouthAudio()">💾 Envoyer le vocal</button><button class="btn secondary" onclick="clearYouthRecord()">🗑️ Effacer</button></div>
+<div class="table-wrap" style="margin-top:15px"><table><thead><tr><th>Titre</th><th>Auteur</th><th>Audio</th><th>Action</th></tr></thead><tbody id="youthAudioBody"></tbody></table></div>
+</div>
+
+<div class="card"><h3>📸 Photos jeunesse (galerie)</h3>
+<div class="form-grid"><div class="form-group"><label>Titre</label><input id="youthGalTitle"></div><div class="form-group full"><label>📁 Photo</label><div class="file-box"><input type="file" id="youthGalFile" accept="image/*" onchange="previewImageFile(this,'youthGalPreview','youthGalName')"><div id="youthGalName" class="file-name">Aucun</div><img id="youthGalPreview" class="preview-image"></div></div></div>
+<div class="actions"><button class="btn primary" onclick="addYouthGal()">＋ Ajouter photo</button></div>
+<div class="table-wrap" style="margin-top:15px"><table><thead><tr><th>Titre</th><th>Photo</th><th>Action</th></tr></thead><tbody id="youthGalBody"></tbody></table></div>
+</div>
+
+<div class="card"><h3>🎬 Vidéos jeunesse</h3>
+<div class="form-grid"><div class="form-group"><label>Titre</label><input id="youthVidTitle"></div><div class="form-group full"><label>📁 Vidéo MP4</label><div class="file-box"><input type="file" id="youthVidFile" accept="video/*" onchange="previewVideoFile(this)"><div id="youthVidName" class="file-name">Aucun</div><video id="youthVidPreview" style="max-width:220px;margin-top:10px;display:none" controls></video></div></div></div>
+<div class="actions"><button class="btn primary" onclick="addYouthVideo()">＋ Ajouter vidéo</button></div>
+<div class="table-wrap" style="margin-top:15px"><table><thead><tr><th>Titre</th><th>Vidéo</th><th>Action</th></tr></thead><tbody id="youthVidBody"></tbody></table></div>
+</div>
+
+<div class="card"><h3>🔥 Activités jeunesse</h3>
+<div class="form-grid"><div class="form-group"><label>Titre</label><input id="youthActTitle"></div><div class="form-group full"><label>Description</label><textarea id="youthActDesc"></textarea></div></div>
+<div class="actions"><button class="btn primary" onclick="addYouthAct()">＋ Ajouter activité</button></div>
+<div class="table-wrap" style="margin-top:15px"><table><thead><tr><th>Titre</th><th>Description</th><th>Action</th></tr></thead><tbody id="youthActBody"></tbody></table></div>
+</div>
+</section>
+
+<section id="protocole" class="view"><div class="section-head"><div><h2>🛡️ Protocole & Sécurité — Auto-save</h2></div><button class="btn secondary" onclick="retourDashboard()">←</button></div><div id="protocoleStatus" class="status"></div><div class="card"><h3>📋 Tableau protocole-et-securite (tape = auto-save)</h3><div class="table-wrap"><table><thead><tr><th>Jour</th><th>Activité</th><th>Heure</th><th>Responsable</th><th>Observation</th><th>Action</th></tr></thead><tbody id="protocoleBody"></tbody></table></div><div class="actions"><button class="btn secondary" onclick="addProtocoleRow()">＋ Ajouter</button><button class="btn danger" onclick="resetProtocole()">↺ Réinitialiser</button></div></div><div class="card"><h3>📣 Annonce protocole (auto)</h3><textarea id="protocoleAnnonce" placeholder="Tape et ça s'enregistre seul"></textarea></div></section>
+
+<section id="pasteur" class="view"><div class="section-head"><div><h2>🙏 Pasteur — Auto-save</h2></div><button class="btn secondary" onclick="retourDashboard()">←</button></div><div class="card"><div class="form-grid"><div class="form-group full"><label>Message</label><textarea id="pasteurMessage" placeholder="Tape = auto-save"></textarea></div></div></div></section>
+
+<section id="berger" class="view"><div class="section-head"><div><h2>🤝 Berger — Auto-save</h2></div><button class="btn secondary" onclick="retourDashboard()">←</button></div><div class="card"><div class="form-grid"><div class="form-group full"><label>Message</label><textarea id="bergerMessage" placeholder="Tape = auto-save"></textarea></div></div></div></section>
+
+<section id="support" class="view"><div class="section-head"><div><h2>💬 Support</h2></div><button class="btn secondary" onclick="retourDashboard()">←</button></div><div class="card"><div class="table-wrap"><table><thead><tr><th>Nom</th><th>Téléphone</th><th>Type</th><th>Message</th><th>Action</th></tr></thead><tbody id="supportBody"></tbody></table></div></div></section>
+
+<section id="contacts" class="view"><div class="section-head"><div><h2>📞 Contacts — Auto-save</h2></div><button class="btn secondary" onclick="retourDashboard()">←</button></div><div class="card"><div class="form-grid"><div class="form-group"><label>Nom pasteur</label><input id="contactPastorName" placeholder="Auto"></div><div class="form-group"><label>WhatsApp pasteur</label><input id="contactPastorPhone" placeholder="Auto"></div><div class="form-group"><label>Nom berger</label><input id="contactBergerName" placeholder="Auto"></div><div class="form-group"><label>WhatsApp berger</label><input id="contactBergerPhone" placeholder="Auto"></div><div class="form-group full"><label>Groupe WhatsApp</label><input id="contactGroup" placeholder="Auto"></div></div></div></section>
+
+<section id="localisation" class="view"><div class="section-head"><div><h2>📍 Localisation — Auto-save</h2></div><button class="btn secondary" onclick="retourDashboard()">←</button></div><div id="localisationStatus" class="status"></div><div class="card"><div class="form-grid"><div class="form-group full"><label>Adresse</label><input id="locationAddress" placeholder="Auto"></div><div class="form-group"><label>Ville</label><input id="locationCity" value="Kinshasa"></div><div class="form-group"><label>Pays</label><input id="locationCountry" value="RDC"></div></div></div></section>
+
+</div></main></div>
+<script>
+const ADMIN_CODE="MICLA123@";
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,8);}
+function getArray(k){try{const v=JSON.parse(localStorage.getItem(k));return Array.isArray(v)?v:[];}catch{return [];}}
+function saveArray(k,d){localStorage.setItem(k,JSON.stringify(d));}
+function esc(v){return String(v??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");}
+function confirmDelete(){return confirm("Voulez-vous vraiment supprimer?");}
+function showStatus(id,msg,ok=true){const el=document.getElementById(id);if(!el)return;el.textContent=msg;el.className="status show "+(ok?"ok":"err");setTimeout(()=>el.className="status",4000);}
+function readFileAsDataURL(f){return new Promise((res,rej)=>{if(!f){res("");return;}const r=new FileReader();r.onload=()=>res(r.result);r.onerror=()=>rej(r.error);r.readAsDataURL(f);});}
+function previewImageFile(input,previewId,nameId){const file=input.files&&input.files[0];const preview=document.getElementById(previewId);const name=document.getElementById(nameId);if(!file){if(preview)preview.style.display="none";if(name)name.textContent="Aucun fichier choisi";return;}if(name)name.textContent="📁 "+file.name;const reader=new FileReader();reader.onload=e=>{if(preview){preview.src=e.target.result;preview.style.display="block";}};reader.readAsDataURL(file);}
+function previewAudioFile(input,previewId,nameId){const file=input.files&&input.files[0];const preview=document.getElementById(previewId);const name=document.getElementById(nameId);if(!file){if(preview)preview.style.display="none";if(name)name.textContent="Aucun fichier choisi";return;}if(name)name.textContent="📁 "+file.name;const reader=new FileReader();reader.onload=e=>{if(preview){preview.src=e.target.result;preview.style.display="block";}};reader.readAsDataURL(file);}
+function previewAudioFileBlob(input,previewId,nameId){const file=input.files&&input.files[0];const preview=document.getElementById(previewId);const name=document.getElementById(nameId);if(!file){if(preview){preview.style.display="none";preview.removeAttribute('src');}if(name)name.textContent="Aucun fichier choisi";return;}if(name)name.textContent="📁 "+file.name+" ("+(file.size/1024/1024).toFixed(2)+" Mo)";if(preview){preview.src=URL.createObjectURL(file);preview.style.display="block";}}
+function previewVideoFile(input){const f=input.files&&input.files[0];const name=document.getElementById("youthVidName");const prev=document.getElementById("youthVidPreview");if(!f){if(name)name.textContent="Aucun";if(prev)prev.style.display="none";return;}if(name)name.textContent="📁 "+f.name;if(prev){prev.src=URL.createObjectURL(f);prev.style.display="block";}}
+function connexionAdmin(){const code=document.getElementById("adminCode").value;const error=document.getElementById("loginError");if(code===ADMIN_CODE){sessionStorage.setItem("micla_admin_auth","true");afficherAdmin();}else{error.textContent="❌ Code incorrect.";}}
+function afficherAdmin(){document.getElementById("loginPage").style.display="none";document.getElementById("adminPage").style.display="block";initialiser();}
+function deconnexion(){sessionStorage.removeItem("micla_admin_auth");location.reload();}
+document.getElementById("adminCode").addEventListener("keydown",e=>{if(e.key==="Enter")connexionAdmin();});
+function openView(id){document.querySelectorAll(".view").forEach(v=>v.classList.remove("active"));const t=document.getElementById(id);if(!t)return;t.classList.add("active");window.scrollTo({top:0,behavior:"smooth"});if(id==="programme")renderProgramme();if(id==="activites")renderActivities();if(id==="chantres")renderChantres();if(id==="chansons")renderSongs();if(id==="affiches")renderAffiches();if(id==="galerie")renderGalerie();if(id==="messages")renderMessages();if(id==="actualites")renderActualites();if(id==="jeunesse")loadYouth();if(id==="protocole")renderProtocole();if(id==="pasteur")renderPerson("pasteur");if(id==="berger")renderPerson("berger");if(id==="support")renderSupport();if(id==="contacts")loadContacts();if(id==="localisation")loadLocalisation();if(id==="site"){loadIndexForm();}}
+function retourDashboard(){openView("dashboard");updateStats();}
+function openDB(){return new Promise((res,rej)=>{const r=indexedDB.open("micla_db",2);r.onupgradeneeded=e=>{const db=e.target.result;if(!db.objectStoreNames.contains("chansons"))db.createObjectStore("chansons",{keyPath:"id"});};r.onsuccess=e=>res(e.target.result);r.onerror=e=>rej(e);});}
+async function saveSongToDB(song){const db=await openDB();return new Promise((res,rej)=>{const tx=db.transaction("chansons","readwrite");tx.objectStore("chansons").put(song);tx.oncomplete=()=>res();tx.onerror=e=>rej(e);});}
+async function getSongsFromDB(){const db=await openDB();return new Promise((res,rej)=>{const tx=db.transaction("chansons","readonly");const req=tx.objectStore("chansons").getAll();req.onsuccess=()=>res(req.result||[]);req.onerror=e=>rej(e);});}
+async function deleteSongFromDB(id){const db=await openDB();return new Promise((res,rej)=>{const tx=db.transaction("chansons","readwrite");tx.objectStore("chansons").delete(id);tx.oncomplete=()=>res();tx.onerror=e=>rej(e);});}
+function updateStats(){const count=k=>{try{const a=JSON.parse(localStorage.getItem(k));return Array.isArray(a)?a.length:0;}catch{return 0;}};getSongsFromDB().then(songs=>{document.getElementById("statChansons").textContent=songs.length;}).catch(()=>{document.getElementById("statChansons").textContent=count("micla_chansons");});document.getElementById("statChantres").textContent=count("micla_chantres");document.getElementById("statActivites").textContent=Math.max(count("micla_activities"),count("micla_activites"));document.getElementById("statAffiches").textContent=count("micla_affiches");document.getElementById("statGalerie").textContent=count("micla_galerie");document.getElementById("statMessages").textContent=count("micla_messages");document.getElementById("statActualites").textContent=count("micla_actualites");document.getElementById("statSupport").textContent=count("micla_support_requests");}
+function loadIndexForm(){try{const d=JSON.parse(localStorage.getItem("micla_index")||"{}");document.getElementById("idxBadge").value=d.badge||"";document.getElementById("idxTitle").value=d.title||"";document.getElementById("idxSubtitle").value=d.subtitle||"";document.getElementById("idxDesc").value=d.description||"";document.getElementById("idxVerseText").value=d.verseText||"";document.getElementById("idxVerseRef").value=d.verseRef||"";document.getElementById("idxWelcomeTitle").value=d.welcomeTitle||"";document.getElementById("idxWelcomeText").value=d.welcomeText||"";}catch{}}
+function saveIndex(){const data={badge:document.getElementById("idxBadge").value,title:document.getElementById("idxTitle").value,subtitle:document.getElementById("idxSubtitle").value,description:document.getElementById("idxDesc").value,verseText:document.getElementById("idxVerseText").value,verseRef:document.getElementById("idxVerseRef").value,welcomeTitle:document.getElementById("idxWelcomeTitle").value,welcomeText:document.getElementById("idxWelcomeText").value};localStorage.setItem("micla_index",JSON.stringify(data));}
+const defaultProgramme=[{jour:"Lundi",activite:"Une heure avec Jésus",heure:"17h00 – 18h00",predicateur:"À définir",moderateur:"À définir"},{jour:"Mardi",activite:"Partage biblique",heure:"17h00 – 18h00",predicateur:"À définir",moderateur:"À définir"},{jour:"Mercredi",activite:"Culte d’enseignement",heure:"17h30 – 19h30",predicateur:"À définir",moderateur:"À définir"},{jour:"Jeudi",activite:"Intercession des serviteurs",heure:"17h00 – 18h00",predicateur:"À définir",moderateur:"À définir"},{jour:"Vendredi",activite:"Combat spirituel",heure:"17h30 – 19h30",predicateur:"À définir",moderateur:"À définir"},{jour:"Samedi",activite:"Programme de la Jeunesse",heure:"16h30 – 17h30",predicateur:"À définir",moderateur:"À définir"},{jour:"Dimanche",activite:"Adoration & Action de Grâce",heure:"07h30 – 10h30",predicateur:"À définir",moderateur:"À définir"}];
+function renderProgramme(){let data=getArray("micla_programme");if(!data.length)data=defaultProgramme.slice();const body=document.getElementById("programmeBody");body.innerHTML="";data.forEach((item,i)=>{body.innerHTML+=`<tr><td><input data-p="${i}" data-field="jour" value="${esc(item.jour)}"></td><td><input data-p="${i}" data-field="activite" value="${esc(item.activite)}"></td><td><input data-p="${i}" data-field="heure" value="${esc(item.heure)}"></td><td><input data-p="${i}" data-field="predicateur" value="${esc(item.predicateur)}"></td><td><input data-p="${i}" data-field="moderateur" value="${esc(item.moderateur)}"></td><td><button class="btn danger" onclick="deleteProgrammeRow(${i})">Suppr</button></td></tr>`;});}
+function addProgrammeRow(){let data=getArray("micla_programme");if(!data.length)data=defaultProgramme.slice();data.push({jour:"",activite:"",heure:"",predicateur:"",moderateur:""});saveArray("micla_programme",data);renderProgramme();}
+function deleteProgrammeRow(i){let data=getArray("micla_programme");if(!data.length)data=defaultProgramme.slice();data.splice(i,1);saveArray("micla_programme",data);renderProgramme();}
+function saveProgramme(){const inputs=document.querySelectorAll("#programmeBody input");let data=getArray("micla_programme");if(!data.length)data=defaultProgramme.slice();inputs.forEach(inp=>{const idx=parseInt(inp.dataset.p);const field=inp.dataset.field;if(!data[idx])data[idx]={};data[idx][field]=inp.value;});saveArray("micla_programme",data);showStatus("programmeStatus","✅ Programme auto-enregistré",true);}
+async function addActivity(){const file=document.getElementById("actImage").files[0];let img="";if(file)img=await readFileAsDataURL(file);const data=getArray("micla_activities");data.push({id:uid(),title:document.getElementById("actTitle").value,date:document.getElementById("actDate").value,time:document.getElementById("actTime").value,location:document.getElementById("actLocation").value,description:document.getElementById("actDescription").value,image:img});saveArray("micla_activities",data);saveArray("micla_activites",data);renderActivities();updateStats();}
+function renderActivities(){const body=document.getElementById("activitiesBody");const data=getArray("micla_activities").length?getArray("micla_activities"):getArray("micla_activites");body.innerHTML="";if(!data.length){body.innerHTML=`<tr><td colspan="5" class="empty">Aucune activité</td></tr>`;return;}data.slice().reverse().forEach(a=>{body.innerHTML+=`<tr><td>${esc(a.title)}</td><td>${esc(a.date)}</td><td>${esc(a.time)}</td><td>${esc(a.location)}</td><td><button class="btn danger" onclick="delAct('${a.id}')">Suppr</button></td></tr>`;});}
+function delAct(id){let d=getArray("micla_activities");d=d.filter(x=>x.id!==id);saveArray("micla_activities",d);saveArray("micla_activites",d);renderActivities();updateStats();}
+async function addChantre(){const file=document.getElementById("chantrePhoto").files[0];let photo="";if(file)photo=await readFileAsDataURL(file);const data=getArray("micla_chantres");data.push({id:uid(),name:document.getElementById("chantreName").value,role:document.getElementById("chantreRole").value,phone:document.getElementById("chantrePhone").value,photo:photo});saveArray("micla_chantres",data);renderChantres();updateStats();}
+function renderChantres(){const body=document.getElementById("chantresBody");const data=getArray("micla_chantres");body.innerHTML="";if(!data.length){body.innerHTML=`<tr><td colspan="5" class="empty">Aucun chantre</td></tr>`;return;}data.slice().reverse().forEach(c=>{body.innerHTML+=`<tr><td>${esc(c.name)}</td><td>${esc(c.role)}</td><td>${esc(c.phone)}</td><td>${c.photo?`<img src="${c.photo}" style="width:50px;height:50px;border-radius:50%">`:"—"}</td><td><button class="btn danger" onclick="delChantre('${c.id}')">Suppr</button></td></tr>`;});}
+function delChantre(id){let d=getArray("micla_chantres");d=d.filter(x=>x.id!==id);saveArray("micla_chantres",d);renderChantres();updateStats();}
+async function addSong(){const fileInput=document.getElementById("songAudio");const file=fileInput.files[0];if(!file){showStatus("chansonsStatus","❌ Choisis une chanson",false);return;}showStatus("chansonsStatus","⏳ Enregistrement...",true);try{const title=file.name.replace(/\.[^/.]+$/,"");const song={id:uid(),title:title,size:(file.size/1024/1024).toFixed(2)+" Mo",audioBlob:file,date:Date.now()};await saveSongToDB(song);fileInput.value="";document.getElementById("songAudioName").textContent="Aucun";const prev=document.getElementById("songAudioPreview");prev.style.display="none";prev.removeAttribute('src');showStatus("chansonsStatus","✅ '"+title+"' publié — 3min complet!",true);renderSongs();updateStats();}catch(e){showStatus("chansonsStatus","❌ "+e.message,false);}}
+async function renderSongs(){const body=document.getElementById("songsBody");try{const songs=await getSongsFromDB();body.innerHTML="";if(!songs.length){body.innerHTML=`<tr><td colspan="4" class="empty">Aucune chanson</td></tr>`;return;}songs.slice().reverse().forEach(s=>{body.innerHTML+=`<tr><td>${esc(s.title)}</td><td>${esc(s.size||"")}</td><td>✅ Complet</td><td><button class="btn danger" onclick="delSong('${s.id}')">Suppr</button></td></tr>`;});}catch{body.innerHTML=`<tr><td colspan="4" class="empty">Erreur</td></tr>`;}}
+async function delSong(id){if(!confirmDelete())return;await deleteSongFromDB(id);renderSongs();updateStats();}
+async function addAffiche(){const file=document.getElementById("afficheImage").files[0];let img="";if(file)img=await readFileAsDataURL(file);const data=getArray("micla_affiches");data.push({id:uid(),title:document.getElementById("afficheTitle").value,date:document.getElementById("afficheDate").value,time:document.getElementById("afficheTime").value,location:document.getElementById("afficheLocation").value,description:document.getElementById("afficheDescription").value,image:img});saveArray("micla_affiches",data);renderAffiches();updateStats();}
+function renderAffiches(){const body=document.getElementById("affichesBody");const data=getArray("micla_affiches");body.innerHTML="";if(!data.length){body.innerHTML=`<tr><td colspan="4" class="empty">Aucune affiche</td></tr>`;return;}data.slice().reverse().forEach(a=>{body.innerHTML+=`<tr><td>${esc(a.title)}</td><td>${esc(a.date)}</td><td>${esc(a.location)}</td><td><button class="btn danger" onclick="delAffiche('${a.id}')">Suppr</button></td></tr>`;});}
+function delAffiche(id){let d=getArray("micla_affiches");d=d.filter(x=>x.id!==id);saveArray("micla_affiches",d);renderAffiches();updateStats();}
+async function addGalerie(){const file=document.getElementById("galerieImage").files[0];let img="";if(file)img=await readFileAsDataURL(file);const data=getArray("micla_galerie");data.push({id:uid(),title:document.getElementById("galerieTitle").value,description:document.getElementById("galerieDescription").value,image:img});saveArray("micla_galerie",data);renderGalerie();updateStats();}
+function renderGalerie(){const body=document.getElementById("galerieBody");const data=getArray("micla_galerie");body.innerHTML="";if(!data.length){body.innerHTML=`<tr><td colspan="3" class="empty">Aucune photo</td></tr>`;return;}data.slice().reverse().forEach(g=>{body.innerHTML+=`<tr><td>${esc(g.title)}</td><td>${g.image?`<img src="${g.image}" style="width:60px;height:40px;object-fit:cover">`:"—"}</td><td><button class="btn danger" onclick="delGalerie('${g.id}')">Suppr</button></td></tr>`;});}
+function delGalerie(id){let d=getArray("micla_galerie");d=d.filter(x=>x.id!==id);saveArray("micla_galerie",d);renderGalerie();updateStats();}
+async function addMessage(){const file=document.getElementById("msgAudio").files[0];let audio="";if(file)audio=await readFileAsDataURL(file);const data=getArray("micla_messages");data.push({id:uid(),title:document.getElementById("msgTitle").value,author:document.getElementById("msgAuthor").value,date:document.getElementById("msgDate").value,description:document.getElementById("msgDescription").value,audio:audio});saveArray("micla_messages",data);renderMessages();updateStats();}
+function renderMessages(){const body=document.getElementById("messagesBody");const data=getArray("micla_messages");body.innerHTML="";if(!data.length){body.innerHTML=`<tr><td colspan="4" class="empty">Aucun message</td></tr>`;return;}data.slice().reverse().forEach(m=>{body.innerHTML+=`<tr><td>${esc(m.title)}</td><td>${esc(m.author)}</td><td>${esc(m.date)}</td><td><button class="btn danger" onclick="delMsg('${m.id}')">Suppr</button></td></tr>`;});}
+function delMsg(id){let d=getArray("micla_messages");d=d.filter(x=>x.id!==id);saveArray("micla_messages",d);renderMessages();updateStats();}
+async function addActualite(){const file=document.getElementById("newsImage").files[0];let img="";if(file)img=await readFileAsDataURL(file);const data=getArray("micla_actualites");data.push({id:uid(),title:document.getElementById("newsTitle").value,date:document.getElementById("newsDate").value,description:document.getElementById("newsDescription").value,image:img});saveArray("micla_actualites",data);renderActualites();updateStats();}
+function renderActualites(){const body=document.getElementById("actualitesBody");const data=getArray("micla_actualites");body.innerHTML="";if(!data.length){body.innerHTML=`<tr><td colspan="3" class="empty">Aucune actualité</td></tr>`;return;}data.slice().reverse().forEach(a=>{body.innerHTML+=`<tr><td>${esc(a.title)}</td><td>${esc(a.date)}</td><td><button class="btn danger" onclick="delNews('${a.id}')">Suppr</button></td></tr>`;});}
+function delNews(id){let d=getArray("micla_actualites");d=d.filter(x=>x.id!==id);saveArray("micla_actualites",d);renderActualites();updateStats();}
+
+// VOCAL WHATSAPP
+let mediaRecorder=null, audioChunks=[], recordedBlob=null, recordTimer=null, recordSeconds=0, recordUrl=null;
+function updateTimer(){recordSeconds++; const m=String(Math.floor(recordSeconds/60)).padStart(2,'0'); const s=String(recordSeconds%60).padStart(2,'0'); document.getElementById("recTimer").textContent=m+":"+s;}
+async function startYouthRecord(){
+ try{
+  const stream=await navigator.mediaDevices.getUserMedia({audio:true});
+  audioChunks=[]; recordedBlob=null; recordSeconds=0;
+  document.getElementById("recTimer").textContent="00:00";
+  document.getElementById("recStatus").textContent="🔴 Enregistrement... parle";
+  document.getElementById("recStatus").style.color="#ff6b6b";
+  mediaRecorder=new MediaRecorder(stream);
+  mediaRecorder.ondataavailable=e=>{if(e.data.size>0) audioChunks.push(e.data);};
+  mediaRecorder.onstop=()=>{
+   recordedBlob=new Blob(audioChunks,{type:'audio/webm'});
+   if(recordUrl) URL.revokeObjectURL(recordUrl);
+   recordUrl=URL.createObjectURL(recordedBlob);
+   const prev=document.getElementById("recordPreview");
+   prev.src=recordUrl; prev.style.display="block";
+   document.getElementById("recordName").textContent="🎤 Vocal prêt ("+(recordedBlob.size/1024).toFixed(1)+" Ko)";
+   document.getElementById("playBtn").style.display="inline-block";
+   document.getElementById("recStatus").textContent="✅ Vocal prêt — envoie";
+   document.getElementById("recStatus").style.color="#65e2bd";
+   stream.getTracks().forEach(t=>t.stop());
+  };
+  mediaRecorder.start();
+  document.getElementById("recBtn").style.display="none";
+  document.getElementById("stopBtn").style.display="inline-block";
+  recordTimer=setInterval(updateTimer,1000);
+ }catch(err){alert("❌ Micro refusé: "+err.message);}
+}
+function stopYouthRecord(){if(mediaRecorder && mediaRecorder.state!=="inactive"){mediaRecorder.stop(); clearInterval(recordTimer); document.getElementById("recBtn").style.display="inline-block"; document.getElementById("stopBtn").style.display="none";}}
+function playYouthRecord(){const p=document.getElementById("recordPreview"); if(p) p.play();}
+function clearYouthRecord(){recordedBlob=null; audioChunks=[]; recordSeconds=0; if(recordUrl) URL.revokeObjectURL(recordUrl); const pr=document.getElementById("recordPreview"); if(pr){pr.style.display="none"; pr.removeAttribute('src');} document.getElementById("recordName").textContent=""; document.getElementById("recTimer").textContent="00:00"; document.getElementById("recStatus").textContent="Appuie sur 🎤"; document.getElementById("recStatus").style.color="var(--muted)"; const pb=document.getElementById("playBtn"); if(pb) pb.style.display="none"; const rb=document.getElementById("recBtn"); if(rb) rb.style.display="inline-block"; const sb=document.getElementById("stopBtn"); if(sb) sb.style.display="none";}
+
+// JEUNESSE COMPLET
+function loadYouth(){
+ try{
+  const photo=localStorage.getItem("micla_youth_photo");
+  if(photo){ const p=document.getElementById("youthPhotoPreview"); if(p){p.src=photo; p.style.display="block";} const n=document.getElementById("youthPhotoName"); if(n) n.textContent="Photo enregistrée"; }
+  document.getElementById("youthMessage").value=localStorage.getItem("micla_youth_message")||"";
+  document.getElementById("youthPrayer").value=localStorage.getItem("micla_youth_prayer")||"";
+  document.getElementById("youthNote").value=localStorage.getItem("micla_youth_note")||"";
+  document.getElementById("youthPreacher").value=localStorage.getItem("micla_youth_preacher")||"";
+  document.getElementById("youthModerator").value=localStorage.getItem("micla_youth_moderator")||"";
+  document.getElementById("youthVerse").value=localStorage.getItem("micla_youth_verse")||"";
+  document.getElementById("youthVerseReference").value=localStorage.getItem("micla_youth_verse_reference")||"";
+ }catch{}
+ renderYouthAnns(); renderYouthAudios(); renderYouthGals(); renderYouthVids(); renderYouthActs();
+}
+function saveYouthPhoto(){const f=document.getElementById("youthPhoto").files[0]; if(!f){showStatus("jeunesseStatus","Choisis une photo",false);return;} const r=new FileReader(); r.onload=e=>{localStorage.setItem("micla_youth_photo",e.target.result); showStatus("jeunesseStatus","✅ Photo enregistrée",true); loadYouth();}; r.readAsDataURL(f);}
+function delYouthPhoto(){localStorage.removeItem("micla_youth_photo"); const p=document.getElementById("youthPhotoPreview"); if(p) p.style.display="none"; showStatus("jeunesseStatus","Photo supprimée",true);}
+function saveYouthTexts(){
+ localStorage.setItem("micla_youth_message",document.getElementById("youthMessage").value);
+ localStorage.setItem("micla_youth_prayer",document.getElementById("youthPrayer").value);
+ localStorage.setItem("micla_youth_note",document.getElementById("youthNote").value);
+ localStorage.setItem("micla_youth_preacher",document.getElementById("youthPreacher").value);
+ localStorage.setItem("micla_youth_moderator",document.getElementById("youthModerator").value);
+ localStorage.setItem("micla_youth_verse",document.getElementById("youthVerse").value);
+ localStorage.setItem("micla_youth_verse_reference",document.getElementById("youthVerseReference").value);
+}
+function saveYouth(){saveYouthTexts(); showStatus("jeunesseStatus","✅ Jeunesse enregistrée",true);}
+function renderYouthAnns(){const data=getArray("micla_youth_announcements"); const body=document.getElementById("youthAnnBody"); if(!body) return; body.innerHTML=data.length?"":`<tr><td colspan="4" class="empty">Aucune annonce</td></tr>`; data.slice().reverse().forEach(a=>{body.innerHTML+=`<tr><td>${esc(a.title)}</td><td>${esc(a.date)}</td><td>${esc((a.text||"").slice(0,60))}</td><td><button class="btn danger" onclick="delYouthAnn('${a.id}')">X</button></td></tr>`;});}
+function addYouthAnn(){const data=getArray("micla_youth_announcements"); data.push({id:uid(),title:document.getElementById("youthAnnTitle").value,date:document.getElementById("youthAnnDate").value,text:document.getElementById("youthAnnText").value}); saveArray("micla_youth_announcements",data); document.getElementById("youthAnnTitle").value=""; document.getElementById("youthAnnText").value=""; renderYouthAnns(); showStatus("jeunesseStatus","✅ Annonce ajoutée",true);}
+function delYouthAnn(id){let d=getArray("micla_youth_announcements").filter(x=>x.id!==id); saveArray("micla_youth_announcements",d); renderYouthAnns();}
+function renderYouthAudios(){const data=getArray("micla_youth_audios"); const body=document.getElementById("youthAudioBody"); if(!body) return; body.innerHTML=data.length?"":`<tr><td colspan="4" class="empty">Aucun vocal</td></tr>`; data.slice().reverse().forEach(a=>{body.innerHTML+=`<tr><td>${esc(a.title)}</td><td>${esc(a.author)}</td><td><audio controls src="${a.url}" style="width:120px"></audio></td><td><button class="btn danger" onclick="delYouthAudio('${a.id}')">X</button></td></tr>`;});}
+async function addYouthAudio(){
+ let file=document.getElementById("youthAudioFile").files[0];
+ let blobToSave=null; let type="audio/webm";
+ if(recordedBlob){blobToSave=recordedBlob; type=recordedBlob.type||"audio/webm";} else if(file){blobToSave=file; type=file.type;} else {showStatus("jeunesseStatus","🎤 Enregistre ou importe",false);return;}
+ const url=await new Promise(res=>{const r=new FileReader(); r.onload=e=>res(e.target.result); r.readAsDataURL(blobToSave);});
+ const data=getArray("micla_youth_audios");
+ data.push({id:uid(),title:document.getElementById("youthAudioTitle").value||"Vocal "+new Date().toLocaleDateString(),author:document.getElementById("youthAudioAuthor").value||"Jeunesse",url:url,type:type,date:Date.now()});
+ saveArray("micla_youth_audios",data); renderYouthAudios(); showStatus("jeunesseStatus","✅ Vocal envoyé — jeunesse.html",true); clearYouthRecord(); document.getElementById("youthAudioFile").value=""; document.getElementById("youthAudioTitle").value="";
+}
+function delYouthAudio(id){let d=getArray("micla_youth_audios").filter(x=>x.id!==id); saveArray("micla_youth_audios",d); renderYouthAudios();}
+function renderYouthGals(){const data=getArray("micla_youth_gallery"); const body=document.getElementById("youthGalBody"); if(!body) return; body.innerHTML=data.length?"":`<tr><td colspan="3" class="empty">Aucune photo</td></tr>`; data.slice().reverse().forEach(a=>{body.innerHTML+=`<tr><td>${esc(a.title)}</td><td><img src="${a.url}" style="width:60px;height:40px;object-fit:cover;border-radius:6px"></td><td><button class="btn danger" onclick="delYouthGal('${a.id}')">X</button></td></tr>`;});}
+async function addYouthGal(){const file=document.getElementById("youthGalFile").files[0]; if(!file){showStatus("jeunesseStatus","Choisis une photo",false);return;} const url=await readFileAsDataURL(file); const data=getArray("micla_youth_gallery"); data.push({id:uid(),title:document.getElementById("youthGalTitle").value||file.name,url:url}); saveArray("micla_youth_gallery",data); renderYouthGals(); showStatus("jeunesseStatus","✅ Photo ajoutée",true);}
+function delYouthGal(id){let d=getArray("micla_youth_gallery").filter(x=>x.id!==id); saveArray("micla_youth_gallery",d); renderYouthGals();}
+function renderYouthVids(){const data=getArray("micla_youth_videos"); const body=document.getElementById("youthVidBody"); if(!body) return; body.innerHTML=data.length?"":`<tr><td colspan="3" class="empty">Aucune vidéo</td></tr>`; data.slice().reverse().forEach(a=>{body.innerHTML+=`<tr><td>${esc(a.title)}</td><td><video src="${a.url}" style="width:80px;height:45px" controls></video></td><td><button class="btn danger" onclick="delYouthVid('${a.id}')">X</button></td></tr>`;});}
+async function addYouthVideo(){const file=document.getElementById("youthVidFile").files[0]; if(!file){showStatus("jeunesseStatus","Choisis une vidéo",false);return;} const url=await readFileAsDataURL(file); const data=getArray("micla_youth_videos"); data.push({id:uid(),title:document.getElementById("youthVidTitle").value||file.name,url:url,type:file.type}); saveArray("micla_youth_videos",data); renderYouthVids(); showStatus("jeunesseStatus","✅ Vidéo ajoutée",true);}
+function delYouthVid(id){let d=getArray("micla_youth_videos").filter(x=>x.id!==id); saveArray("micla_youth_videos",d); renderYouthVids();}
+function renderYouthActs(){const data=getArray("micla_youth_activities"); const body=document.getElementById("youthActBody"); if(!body) return; body.innerHTML=data.length?"":`<tr><td colspan="3" class="empty">Aucune</td></tr>`; data.slice().reverse().forEach(a=>{body.innerHTML+=`<tr><td>${esc(a.title)}</td><td>${esc((a.description||"").slice(0,60))}</td><td><button class="btn danger" onclick="delYouthAct('${a.id}')">X</button></td></tr>`;});}
+function addYouthAct(){const data=getArray("micla_youth_activities"); data.push({id:uid(),title:document.getElementById("youthActTitle").value,description:document.getElementById("youthActDesc").value}); saveArray("micla_youth_activities",data); document.getElementById("youthActTitle").value=""; document.getElementById("youthActDesc").value=""; renderYouthActs(); showStatus("jeunesseStatus","✅ Activité ajoutée",true);}
+function delYouthAct(id){let d=getArray("micla_youth_activities").filter(x=>x.id!==id); saveArray("micla_youth_activities",d); renderYouthActs();}
+
+const defaultProtocole=[
+{jour:"Lundi",activite:"Une heure avec Jésus",heure:"17h00 – 18h00",responsable:"À définir",observation:"Présence avant"},
+{jour:"Mardi",activite:"Partage biblique",heure:"17h00 – 18h00",responsable:"À définir",observation:"Accueil"},
+{jour:"Mercredi",activite:"Culte d'enseignement",heure:"17h30 – 19h30",responsable:"À définir",observation:"Arriver avant"},
+{jour:"Jeudi",activite:"Intercession",heure:"17h00 – 18h00",responsable:"À définir",observation:"Préparation"},
+{jour:"Vendredi",activite:"Combat spirituel",heure:"17h30 – 19h30",responsable:"À définir",observation:"Jusqu'à la fin"},
+{jour:"Samedi",activite:"Jeunesse",heure:"16h30 – 17h30",responsable:"À définir",observation:"Avant 16h30"},
+{jour:"Dimanche",activite:"Adoration",heure:"07h30 – 10h30",responsable:"À définir",observation:"Obligatoire"}
+];
+function renderProtocole(){
+ let data=getArray("micla_protocole");
+ if(!data.length) data=defaultProtocole.slice();
+ const body=document.getElementById("protocoleBody"); if(!body) return;
+ body.innerHTML="";
+ data.forEach((r,i)=>{
+  body.innerHTML+=`<tr>
+   <td><input data-pro="${i}" data-f="jour" value="${esc(r.jour)}"></td>
+   <td><input data-pro="${i}" data-f="activite" value="${esc(r.activite)}"></td>
+   <td><input data-pro="${i}" data-f="heure" value="${esc(r.heure)}"></td>
+   <td><input data-pro="${i}" data-f="responsable" value="${esc(r.responsable||'')}" placeholder="Responsable"></td>
+   <td><input data-pro="${i}" data-f="observation" value="${esc(r.observation||'')}" placeholder="Observation"></td>
+   <td><button class="btn danger" onclick="delProtocole(${i})">X</button></td>
+  </tr>`;
+ });
+ const ann=document.getElementById("protocoleAnnonce"); if(ann) ann.value=localStorage.getItem("micla_protocole_annonce")||"";
+}
+function addProtocoleRow(){let d=getArray("micla_protocole"); if(!d.length) d=defaultProtocole.slice(); d.push({jour:"",activite:"",heure:"",responsable:"",observation:""}); saveArray("micla_protocole",d); renderProtocole();}
+function delProtocole(i){let d=getArray("micla_protocole"); if(!d.length) d=defaultProtocole.slice(); d.splice(i,1); saveArray("micla_protocole",d); renderProtocole();}
+function saveProtocole(){const inputs=document.querySelectorAll("#protocoleBody input"); let d=getArray("micla_protocole"); if(!d.length) d=defaultProtocole.slice(); inputs.forEach(inp=>{const idx=parseInt(inp.dataset.pro); const f=inp.dataset.f; if(!d[idx]) d[idx]={}; d[idx][f]=inp.value;}); saveArray("micla_protocole",d); showStatus("protocoleStatus","✅ Protocole auto-enregistré",true);}
+function saveProtocoleAnnonce(){const v=document.getElementById("protocoleAnnonce").value; localStorage.setItem("micla_protocole_annonce",v); showStatus("protocoleStatus","✅ Annonce auto-enregistrée",true);}
+function resetProtocole(){if(!confirm("Réinitialiser?"))return; saveArray("micla_protocole",defaultProtocole.slice()); localStorage.removeItem("micla_protocole_annonce"); renderProtocole();}
+
+function renderPerson(type){
+ try{
+  if(type==="pasteur") document.getElementById("pasteurMessage").value=localStorage.getItem("micla_pasteur")||"";
+  if(type==="berger") document.getElementById("bergerMessage").value=localStorage.getItem("micla_berger")||"";
+ }catch{}
+}
+function savePasteur(){localStorage.setItem("micla_pasteur",document.getElementById("pasteurMessage").value);}
+function saveBerger(){localStorage.setItem("micla_berger",document.getElementById("bergerMessage").value);}
+function renderSupport(){const data=getArray("micla_support_requests");const body=document.getElementById("supportBody");if(!body) return; body.innerHTML=data.length?"":`<tr><td colspan="5" class="empty">Aucune demande</td></tr>`;data.slice().reverse().forEach(s=>{body.innerHTML+=`<tr><td>${esc(s.name)}</td><td>${esc(s.phone)}</td><td>${esc(s.type)}</td><td>${esc(s.message)}</td><td><button class="btn danger" onclick="delSupport('${s.id}')">Suppr</button></td></tr>`;});}
+function delSupport(id){let d=getArray("micla_support_requests");d=d.filter(x=>x.id!==id);saveArray("micla_support_requests",d);renderSupport();updateStats();}
+function loadContacts(){try{const c=JSON.parse(localStorage.getItem("micla_contacts")||"{}");document.getElementById("contactPastorName").value=c.pastorName||"";document.getElementById("contactPastorPhone").value=c.pastorPhone||"";document.getElementById("contactBergerName").value=c.bergerName||"";document.getElementById("contactBergerPhone").value=c.bergerPhone||"";document.getElementById("contactGroup").value=c.group||"";}catch{}}
+function saveContacts(){localStorage.setItem("micla_contacts",JSON.stringify({pastorName:document.getElementById("contactPastorName").value,pastorPhone:document.getElementById("contactPastorPhone").value,bergerName:document.getElementById("contactBergerName").value,bergerPhone:document.getElementById("contactBergerPhone").value,group:document.getElementById("contactGroup").value}));}
+function loadLocalisation(){try{const l=JSON.parse(localStorage.getItem("micla_localisation")||"{}");document.getElementById("locationAddress").value=l.address||"";document.getElementById("locationCity").value=l.city||"Kinshasa";document.getElementById("locationCountry").value=l.country||"RDC";}catch{}}
+function saveLocalisation(){localStorage.setItem("micla_localisation",JSON.stringify({address:document.getElementById("locationAddress").value,city:document.getElementById("locationCity").value,country:document.getElementById("locationCountry").value}));}
+
+// AUTO-SAVE GLOBAL
+function setupAutoSave(){
+ const debounce=(fn,delay)=>{let t; return (...a)=>{clearTimeout(t); t=setTimeout(()=>fn(...a),delay);};};
+ const autoFields=[
+  {id:'youthMessage', fn:saveYouthTexts, status:'jeunesseStatus'},
+  {id:'youthPrayer', fn:saveYouthTexts, status:'jeunesseStatus'},
+  {id:'youthNote', fn:saveYouthTexts, status:'jeunesseStatus'},
+  {id:'youthPreacher', fn:saveYouthTexts, status:'jeunesseStatus'},
+  {id:'youthModerator', fn:saveYouthTexts, status:'jeunesseStatus'},
+  {id:'youthVerse', fn:saveYouthTexts, status:'jeunesseStatus'},
+  {id:'youthVerseReference', fn:saveYouthTexts, status:'jeunesseStatus'},
+  {id:'pasteurMessage', fn:savePasteur, status:null},
+  {id:'bergerMessage', fn:saveBerger, status:null},
+  {id:'contactPastorName', fn:saveContacts, status:null},
+  {id:'contactPastorPhone', fn:saveContacts, status:null},
+  {id:'contactBergerName', fn:saveContacts, status:null},
+  {id:'contactBergerPhone', fn:saveContacts, status:null},
+  {id:'contactGroup', fn:saveContacts, status:null},
+  {id:'locationAddress', fn:saveLocalisation, status:'localisationStatus'},
+  {id:'locationCity', fn:saveLocalisation, status:'localisationStatus'},
+  {id:'locationCountry', fn:saveLocalisation, status:'localisationStatus'},
+  {id:'idxBadge', fn:saveIndex, status:'siteStatus'},
+  {id:'idxTitle', fn:saveIndex, status:'siteStatus'},
+  {id:'idxSubtitle', fn:saveIndex, status:'siteStatus'},
+  {id:'idxDesc', fn:saveIndex, status:'siteStatus'},
+  {id:'idxVerseText', fn:saveIndex, status:'siteStatus'},
+  {id:'idxVerseRef', fn:saveIndex, status:'siteStatus'},
+  {id:'idxWelcomeTitle', fn:saveIndex, status:'siteStatus'},
+  {id:'idxWelcomeText', fn:saveIndex, status:'siteStatus'},
+  {id:'protocoleAnnonce', fn:saveProtocoleAnnonce, status:'protocoleStatus'},
+ ];
+ autoFields.forEach(({id,fn,status})=>{
+  const el=document.getElementById(id);
+  if(!el) return;
+  el.addEventListener('input', debounce(()=>{
+   fn();
+   if(status) showStatus(status,"✅ Enregistré automatiquement",true);
+  },800));
+ });
+ // Tableaux protocole et programme auto
+ const protoBody=document.getElementById("protocoleBody");
+ if(protoBody) protoBody.addEventListener('input', debounce(()=>{ saveProtocole(); },800));
+ const progBody=document.getElementById("programmeBody");
+ if(progBody) progBody.addEventListener('input', debounce(()=>{ saveProgramme(); },800));
+}
+
+function initialiser(){
+ if(sessionStorage.getItem("micla_admin_auth")!=="true"){document.getElementById("loginPage").style.display="flex";document.getElementById("adminPage").style.display="none";return;}
+ document.getElementById("loginPage").style.display="none";document.getElementById("adminPage").style.display="block";
+ updateStats();renderProgramme();renderActivities();renderChantres();renderSongs();renderAffiches();renderGalerie();renderMessages();renderActualites();renderProtocole();renderSupport();loadContacts();loadLocalisation();loadIndexForm();
+ setTimeout(setupAutoSave,600);
+ setInterval(updateStats,3000);
+}
+initialiser();
+</script>
+</body>
+</html>

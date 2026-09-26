@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Activités — MI.C.L.A</title>
+<style>
+:root{--bg:#050912;--surface:#0d1727;--gold:#d8b45a;--gold-light:#f1d98b;--muted:#8997aa;--border:rgba(216,180,90,.20);}
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:Arial,sans-serif;background:var(--bg);color:#fff}
+.page{min-height:100vh;padding:18px 15px 50px;background:radial-gradient(circle at 50% 0%,rgba(30,80,150,.40),transparent 40%),linear-gradient(180deg,#081a35,#030711)}
+.container{width:100%;max-width:680px;margin:auto} .back{color:var(--gold-light);text-decoration:none;font-size:13px;font-weight:bold;padding:10px 14px;border-radius:12px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.07);display:inline-flex;gap:8px}
+header{text-align:center;padding:30px 8px 32px} .logo{width:105px;height:105px;border-radius:50%;border:2px solid var(--gold);object-fit:cover;background:#081a35} .church-name{color:var(--gold-light);font-size:24px;font-weight:800;letter-spacing:4px;margin-top:12px} .line{width:60px;height:2px;margin:19px auto;background:linear-gradient(90deg,transparent,var(--gold),transparent)} .page-title{font-size:29px;margin-bottom:10px} .page-description{color:var(--muted);font-size:14px;line-height:1.7}
+#activities-container{display:flex;flex-direction:column;gap:28px;margin-top:25px}
+.activity-card{background:var(--surface);border:1px solid var(--border);border-radius:22px;overflow:hidden} .poster-area img{width:100%;max-height:680px;object-fit:contain;display:block;background:#030711} .activity-content{padding:22px} .badge{color:var(--gold-light);background:rgba(216,180,90,.08);border:1px solid rgba(216,180,90,.23);border-radius:30px;padding:7px 12px;font-size:10px;font-weight:bold;margin-bottom:13px;display:inline-block} .activity-title{font-size:24px;margin-bottom:15px} .description-box{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);border-radius:15px;padding:16px;margin-bottom:15px} .description{color:#c5cedb;font-size:14px;line-height:1.7;white-space:pre-line} .information{background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.05);border-radius:13px;padding:13px 14px;color:#d9e0e9;font-size:13px;margin-bottom:9px} .button{width:100%;min-height:48px;display:flex;align-items:center;justify-content:center;gap:8px;padding:13px;border-radius:13px;text-decoration:none;font-weight:bold;font-size:13px;margin-top:10px} .button-whatsapp{background:#25D366;color:#fff}
+.empty{text-align:center;padding:50px 25px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:22px} footer{text-align:center;color:#647187;font-size:11px;margin-top:40px;padding-top:22px;border-top:1px solid rgba(255,255,255,.05)}
+</style>
+</head>
+<body>
+<div class="page"><main class="container">
+<a href="index.html" class="back">← Retour à l'accueil</a>
+<header>
+<img src="activites.png" alt="MI.C.L.A Activités" class="logo" onerror="this.onerror=null; this.src='activite.jpg'; this.onerror=function(){this.src='admin-logo.png'}">
+<div class="church-name">MI.C.L.A</div><div style="color:#9caabd;font-size:11px;letter-spacing:3px;margin-top:5px">CITÉ DE REFUGE</div><div class="line"></div><h1 class="page-title">⭐ Activités</h1><p class="page-description">Retrouvez ici les activités publiées par l'administration — auto-save activé, ça marche direct.</p></header>
+
+<section id="activities-container"></section>
+
+<footer>MI.C.L.A — Cité de Refuge<br>© <span id="year">2026</span></footer>
+</main></div>
+
+<script>
+document.getElementById("year").textContent=new Date().getFullYear();
+
+function esc(s){const d=document.createElement('div'); d.textContent=s||""; return d.innerHTML;}
+
+function renderActivities(){
+ let data;
+ try{data=JSON.parse(localStorage.getItem("micla_activities"))||JSON.parse(localStorage.getItem("micla_activites"))||[];}catch{data=[];}
+ let container=document.getElementById("activities-container");
+ if(!data.length){
+  container.innerHTML=`
+   <article class="activity-card">
+    <div class="poster-area"><img src="activites.png" alt="Activité" onerror="this.src='activite.jpg'"></div>
+    <div class="activity-content"><div class="badge">ACTIVITÉ</div><h2 class="activity-title">Activité MI.C.L.A</h2><div class="description-box"><div class="description">Les affiches et annonces seront publiées dans cet espace. Va dans admin → Activités pour publier.</div></div><div class="information">📅 Date à venir</div><div class="information">⏰ Heure à venir</div><div class="information">📍 Cité de Refuge</div><a href="https://wa.me/243904490937" target="_blank" class="button button-whatsapp">💬 Contacter l'Église</a></div>
+   </article>
+   <div class="empty"><div style="font-size:42px;">⭐</div><h2 style="color:var(--gold-light);margin:10px 0;">Activités de l'Église</h2><p style="color:var(--muted);line-height:1.7;font-size:14px;">Les prochaines activités seront présentées ici avec activites.png.</p></div>
+  `;
+  return;
+ }
+ container.innerHTML=data.slice().reverse().map(act=>`
+  <article class="activity-card">
+   <div class="poster-area">${act.image?`<img src="${act.image}" alt="${esc(act.title)}">`:`<img src="activites.png" alt="Activité" onerror="this.src='activite.jpg'">`}</div>
+   <div class="activity-content">
+    <div class="badge">ACTIVITÉ</div>
+    <h2 class="activity-title">${esc(act.title||'Activité MI.C.L.A')}</h2>
+    <div class="description-box"><div class="description">${esc(act.description||'Pas de description')}</div></div>
+    <div>
+     ${act.date?`<div class="information">📅 ${esc(act.date)}</div>`:''}
+     ${act.time?`<div class="information">⏰ ${esc(act.time)}</div>`:''}
+     ${act.location?`<div class="information">📍 ${esc(act.location)}</div>`:''}
+    </div>
+    <a href="https://wa.me/243904490937" target="_blank" class="button button-whatsapp">💬 Contacter l'Église sur WhatsApp</a>
+   </div>
+  </article>
+ `).join('');
+}
+
+renderActivities();
+window.addEventListener("storage",e=>{if(e.key==="micla_activities" || e.key==="micla_activites") renderActivities();});
+setInterval(renderActivities,2000);
+</script>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "micla-cite-de-refuge",
+  "version": "1.0.0",
+  "description": "Site officiel de MI.C.L.A — Cité de Refuge",
+  "main": "api/server.js",
+  "scripts": {
+    "start": "node api/server.js",
+    "dev": "node api/server.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.2"
+  },
+  "engines": {
+    "node": "20.x"
+  }
+}

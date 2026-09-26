@@ -1,0 +1,1374 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="theme-color" content="#06152f">
+<meta name="description" content="MI.C.L.A — Cité de Refuge. Découvrez le Pasteur Jérémie Bakadisanga et le Berger Chardin Vuanda.">
+
+<title>MI.C.L.A — L'Église</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+
+/* =========================================
+   VARIABLES
+========================================= */
+
+:root{
+    --gold:#d8b45a;
+    --gold2:#f1d98b;
+    --muted:#91a2bc;
+    --green:#25D366;
+}
+
+
+/* =========================================
+   RESET
+========================================= */
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+
+/* =========================================
+   BODY
+========================================= */
+
+body{
+    background:#06152f;
+    color:#fff;
+    font-family:Arial,Helvetica,sans-serif;
+    min-height:100vh;
+}
+
+
+/* =========================================
+   HEADER
+========================================= */
+
+header{
+    background:#030914;
+    padding:12px 16px;
+    display:flex;
+    gap:10px;
+    align-items:center;
+    position:sticky;
+    top:0;
+    z-index:100;
+    border-bottom:1px solid rgba(216,180,90,.15);
+}
+
+.logo{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    border:2px solid var(--gold);
+    object-fit:cover;
+}
+
+.brand h1{
+    color:var(--gold2);
+    font-size:16px;
+}
+
+.brand p{
+    color:var(--muted);
+    font-size:11px;
+    margin-top:3px;
+}
+
+
+/* =========================================
+   SECTION
+========================================= */
+
+.section{
+    padding:16px;
+    max-width:1100px;
+    margin:auto;
+}
+
+
+/* =========================================
+   TITRE
+========================================= */
+
+.page-title{
+    text-align:center;
+    padding:15px 0 20px;
+}
+
+.page-title h2{
+    color:var(--gold2);
+    font-size:22px;
+    margin-bottom:6px;
+}
+
+.page-title p{
+    color:var(--muted);
+    font-size:12px;
+    line-height:1.5;
+}
+
+
+/* =========================================
+   CARTES
+========================================= */
+
+.cards{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+}
+
+.card{
+    background:linear-gradient(
+        145deg,
+        #102d59,
+        #081424
+    );
+
+    border:1px solid rgba(216,180,90,.2);
+
+    border-radius:22px;
+
+    padding:16px;
+
+    box-shadow:
+        0 10px 30px rgba(0,0,0,.15);
+}
+
+
+/* =========================================
+   PROFIL
+========================================= */
+
+.profile{
+    display:flex;
+    gap:12px;
+    align-items:center;
+}
+
+.profile img{
+    width:70px;
+    height:70px;
+
+    border-radius:50%;
+
+    border:2px solid var(--gold);
+
+    object-fit:cover;
+
+    background:#030914;
+}
+
+.profile h4{
+    font-size:15px;
+    line-height:1.3;
+}
+
+.profile p{
+    font-size:11px;
+    color:var(--gold2);
+    margin-top:4px;
+}
+
+
+/* =========================================
+   BOUTONS
+========================================= */
+
+.buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:8px;
+    margin-top:12px;
+}
+
+.btn{
+    min-height:46px;
+
+    border-radius:12px;
+
+    border:1px solid rgba(216,180,90,.2);
+
+    background:rgba(255,255,255,.06);
+
+    color:#fff;
+
+    font-weight:bold;
+
+    font-size:12px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    gap:6px;
+
+    cursor:pointer;
+
+    text-decoration:none;
+
+    transition:
+        transform .15s ease,
+        background .15s ease;
+}
+
+.btn:hover{
+    background:rgba(216,180,90,.12);
+}
+
+.btn:active{
+    transform:scale(.96);
+}
+
+.btn i{
+    color:var(--gold2);
+}
+
+.whatsapp{
+    background:var(--green);
+    border:none;
+}
+
+.whatsapp:hover{
+    background:#20bd5b;
+}
+
+.whatsapp i{
+    color:#fff;
+}
+
+
+/* =========================================
+   MODAL
+========================================= */
+
+.modal{
+    position:fixed;
+
+    inset:0;
+
+    background:rgba(0,0,0,.85);
+
+    z-index:9999;
+
+    display:none;
+}
+
+.modal.show{
+    display:flex;
+
+    align-items:flex-end;
+
+    justify-content:center;
+}
+
+.modal-box{
+    width:100%;
+
+    max-width:650px;
+
+    max-height:90vh;
+
+    overflow:auto;
+
+    background:#0f2440;
+
+    border-radius:22px 22px 0 0;
+
+    padding:16px;
+
+    border:1px solid rgba(216,180,90,.3);
+
+    animation:slide .25s ease;
+}
+
+@keyframes slide{
+
+    from{
+        transform:translateY(100%);
+    }
+
+    to{
+        transform:translateY(0);
+    }
+
+}
+
+
+/* =========================================
+   MODAL HEADER
+========================================= */
+
+.modal-head{
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:12px;
+}
+
+.modal-head h3{
+    color:var(--gold2);
+
+    font-size:18px;
+}
+
+.close{
+    width:36px;
+    height:36px;
+
+    border-radius:50%;
+
+    background:rgba(255,255,255,.1);
+
+    border:none;
+
+    color:#fff;
+
+    font-size:18px;
+
+    cursor:pointer;
+}
+
+
+/* =========================================
+   ELEMENTS
+========================================= */
+
+.item{
+    background:rgba(255,255,255,.06);
+
+    border-radius:14px;
+
+    padding:12px;
+
+    margin:10px 0;
+
+    border:1px solid rgba(216,180,90,.15);
+}
+
+.item h4{
+    color:var(--gold2);
+
+    font-size:14px;
+
+    margin-bottom:6px;
+}
+
+.item p{
+    font-size:13px;
+
+    line-height:1.6;
+
+    color:#fff;
+}
+
+.item small{
+    display:block;
+
+    color:var(--muted);
+
+    font-size:10px;
+
+    margin-top:8px;
+}
+
+
+/* =========================================
+   EMPTY
+========================================= */
+
+.empty{
+    text-align:center;
+
+    padding:40px 15px;
+
+    color:var(--muted);
+
+    font-size:14px;
+
+    line-height:1.5;
+}
+
+.empty i{
+    font-size:40px;
+
+    color:var(--gold);
+
+    display:block;
+
+    margin-bottom:12px;
+}
+
+
+/* =========================================
+   AUDIO
+========================================= */
+
+audio{
+    width:100%;
+    margin-top:8px;
+}
+
+
+/* =========================================
+   FOOTER
+========================================= */
+
+footer{
+    text-align:center;
+
+    padding:25px 16px;
+
+    color:var(--muted);
+
+    font-size:11px;
+}
+
+footer strong{
+    color:var(--gold2);
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media(max-width:700px){
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:380px){
+
+    .section{
+        padding:12px;
+    }
+
+    .buttons{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .profile img{
+        width:62px;
+        height:62px;
+    }
+
+}
+
+</style>
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     HEADER
+========================================= -->
+
+<header>
+
+    <img
+        class="logo"
+        src="logo.png"
+        alt="Logo MI.C.L.A"
+    >
+
+    <div class="brand">
+
+        <h1>MI.C.L.A</h1>
+
+        <p>Cité de Refuge</p>
+
+    </div>
+
+</header>
+
+
+<!-- =========================================
+     CONTENU
+========================================= -->
+
+<div class="section">
+
+
+    <div class="page-title">
+
+        <h2>L'Église</h2>
+
+        <p>
+            Retrouvez les messages, annonces,
+            vocaux et moments de prière
+            de nos responsables.
+        </p>
+
+    </div>
+
+
+    <div class="cards">
+
+
+        <!-- =================================
+             PASTEUR
+        ================================== -->
+
+        <div class="card">
+
+            <div class="profile">
+
+                <img
+                    src="pasteur.jpg"
+                    alt="Pasteur Jérémie Bakadisanga"
+                >
+
+                <div>
+
+                    <h4>
+                        Pasteur Jérémie Bakadisanga
+                    </h4>
+
+                    <p>
+                        Pasteur principal
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="buttons">
+
+
+                <button
+                    class="btn"
+                    onclick="openAnnonces('pasteur')"
+                >
+
+                    <i class="fa-solid fa-bullhorn"></i>
+
+                    Annonces
+
+                </button>
+
+
+                <button
+                    class="btn"
+                    onclick="openMessages('pasteur')"
+                >
+
+                    <i class="fa-solid fa-message"></i>
+
+                    Message
+
+                </button>
+
+
+                <button
+                    class="btn"
+                    onclick="openVocaux('pasteur')"
+                >
+
+                    <i class="fa-solid fa-microphone"></i>
+
+                    Vocaux
+
+                </button>
+
+
+                <button
+                    class="btn"
+                    onclick="openPrieres('pasteur')"
+                >
+
+                    <i class="fa-solid fa-hands-praying"></i>
+
+                    Prière
+
+                </button>
+
+
+                <a
+                    class="btn whatsapp"
+                    href="https://wa.me/243904490937"
+                    target="_blank"
+                >
+
+                    <i class="fa-brands fa-whatsapp"></i>
+
+                    WhatsApp
+
+                </a>
+
+
+                <a
+                    class="btn"
+                    href="tel:+243904490937"
+                >
+
+                    <i class="fa-solid fa-phone"></i>
+
+                    Appeler
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+
+        <!-- =================================
+             BERGER
+        ================================== -->
+
+        <div class="card">
+
+            <div class="profile">
+
+                <img
+                    src="berger.jpg"
+                    alt="Berger Chardin Vuanda"
+                >
+
+                <div>
+
+                    <h4>
+                        Chardin Vuanda
+                    </h4>
+
+                    <p>
+                        Berger
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="buttons">
+
+
+                <button
+                    class="btn"
+                    onclick="openAnnonces('berger')"
+                >
+
+                    <i class="fa-solid fa-bullhorn"></i>
+
+                    Annonces
+
+                </button>
+
+
+                <button
+                    class="btn"
+                    onclick="openMessages('berger')"
+                >
+
+                    <i class="fa-solid fa-message"></i>
+
+                    Message
+
+                </button>
+
+
+                <button
+                    class="btn"
+                    onclick="openVocaux('berger')"
+                >
+
+                    <i class="fa-solid fa-microphone"></i>
+
+                    Vocaux
+
+                </button>
+
+
+                <button
+                    class="btn"
+                    onclick="openPrieres('berger')"
+                >
+
+                    <i class="fa-solid fa-hands-praying"></i>
+
+                    Prière
+
+                </button>
+
+
+                <a
+                    class="btn whatsapp"
+                    href="https://wa.me/243896039439"
+                    target="_blank"
+                >
+
+                    <i class="fa-brands fa-whatsapp"></i>
+
+                    WhatsApp
+
+                </a>
+
+
+                <a
+                    class="btn"
+                    href="tel:+243896039439"
+                >
+
+                    <i class="fa-solid fa-phone"></i>
+
+                    Appeler
+
+                </a>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================
+     MODAL
+========================================= -->
+
+<div
+    class="modal"
+    id="modal"
+>
+
+    <div class="modal-box">
+
+
+        <div class="modal-head">
+
+            <h3 id="modalTitle">
+                Titre
+            </h3>
+
+            <button
+                class="close"
+                onclick="closeModal()"
+                aria-label="Fermer"
+            >
+
+                ✕
+
+            </button>
+
+        </div>
+
+
+        <div id="modalBody"></div>
+
+
+    </div>
+
+</div>
+
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer>
+
+    <strong>
+        MI.C.L.A — CITÉ DE REFUGE
+    </strong>
+
+    <br><br>
+
+    Ministère des Chrétiens pour Libérer les Âmes
+
+</footer>
+
+
+
+<script>
+
+/* =========================================
+   VARIABLES
+========================================= */
+
+let cur = "pasteur";
+
+
+/* =========================================
+   SÉCURISATION DU TEXTE
+========================================= */
+
+function esc(text){
+
+    return String(text || "")
+        .replace(/&/g,"&amp;")
+        .replace(/</g,"&lt;")
+        .replace(/>/g,"&gt;")
+        .replace(/"/g,"&quot;")
+        .replace(/'/g,"&#039;");
+
+}
+
+
+/* =========================================
+   RÉCUPÉRER LES DONNÉES
+========================================= */
+
+function getAll(key){
+
+    try{
+
+        const data =
+            JSON.parse(
+                localStorage.getItem(key) || "[]"
+            );
+
+        return Array.isArray(data)
+            ? data
+            : [];
+
+    }catch(error){
+
+        return [];
+
+    }
+
+}
+
+
+/* =========================================
+   MODAL
+========================================= */
+
+function show(title, html){
+
+    document.getElementById(
+        "modalTitle"
+    ).textContent = title;
+
+
+    document.getElementById(
+        "modalBody"
+    ).innerHTML = html;
+
+
+    document.getElementById(
+        "modal"
+    ).classList.add("show");
+
+}
+
+
+function closeModal(){
+
+    document.getElementById(
+        "modal"
+    ).classList.remove("show");
+
+}
+
+
+/* =========================================
+   FERMER EN CLIQUANT À L'EXTÉRIEUR
+========================================= */
+
+document.getElementById("modal")
+.addEventListener(
+    "click",
+    function(event){
+
+        if(event.target.id === "modal"){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   ANNONCES
+========================================= */
+
+function openAnnonces(person){
+
+    cur = person;
+
+    let list =
+        getAll(
+            `micla_${person}_annonces`
+        );
+
+
+    if(!list.length){
+
+        list =
+            getAll(
+                `micla_${person}_announcements`
+            );
+
+    }
+
+
+    let html = "";
+
+
+    if(!list.length){
+
+        html = `
+
+            <div class="empty">
+
+                <i class="fa-solid fa-bullhorn"></i>
+
+                <b>
+                    Il n'y a aucune annonce
+                </b>
+
+                <br>
+
+                Pour ${
+                    person === "pasteur"
+                    ? "le Pasteur"
+                    : "le Berger"
+                }
+                pour le moment.
+
+            </div>
+
+        `;
+
+    }else{
+
+        list.forEach(function(item){
+
+            html += `
+
+                <div class="item">
+
+                    <h4>
+                        📢
+                        ${esc(
+                            item.title ||
+                            item.titre ||
+                            "Annonce"
+                        )}
+                    </h4>
+
+                    <p>
+                        ${esc(
+                            item.content ||
+                            item.text ||
+                            item.message ||
+                            ""
+                        )}
+                    </p>
+
+                    ${
+                        item.dateEvent
+                        ? `
+                            <small>
+                                📅 ${esc(item.dateEvent)}
+                                ${esc(item.time || "")}
+                                ${esc(item.place || "")}
+                            </small>
+                        `
+                        : ""
+                    }
+
+                </div>
+
+            `;
+
+        });
+
+    }
+
+
+    show(
+        "Annonces — " +
+        (
+            person === "pasteur"
+            ? "Pasteur"
+            : "Berger"
+        ),
+        html
+    );
+
+}
+
+
+/* =========================================
+   PRIÈRES
+========================================= */
+
+function openPrieres(person){
+
+    let list =
+        getAll(
+            `micla_${person}_prieres`
+        );
+
+
+    if(!list.length){
+
+        list =
+            getAll(
+                `micla_${person}_prayers`
+            );
+
+    }
+
+
+    let html = "";
+
+
+    if(!list.length){
+
+        html = `
+
+            <div class="empty">
+
+                <i class="fa-solid fa-hands-praying"></i>
+
+                <b>
+                    Il n'y a aucune prière
+                </b>
+
+                <br>
+
+                Pour ${
+                    person === "pasteur"
+                    ? "le Pasteur"
+                    : "le Berger"
+                }
+                pour le moment.
+
+            </div>
+
+        `;
+
+    }else{
+
+        list.forEach(function(item){
+
+            html += `
+
+                <div class="item">
+
+                    <h4>
+                        🙏
+                        ${esc(
+                            item.title ||
+                            "Prière"
+                        )}
+                    </h4>
+
+                    <p style="white-space:pre-line">
+
+                        ${esc(
+                            item.content ||
+                            item.text ||
+                            item.texte ||
+                            ""
+                        )}
+
+                    </p>
+
+                    ${
+                        item.author
+                        ? `
+                            <small>
+                                ${esc(item.author)}
+                            </small>
+                        `
+                        : ""
+                    }
+
+                </div>
+
+            `;
+
+        });
+
+    }
+
+
+    show(
+        "Prières — " +
+        (
+            person === "pasteur"
+            ? "Pasteur"
+            : "Berger"
+        ),
+        html
+    );
+
+}
+
+
+/* =========================================
+   MESSAGES
+========================================= */
+
+function openMessages(person){
+
+    let list =
+        getAll(
+            `micla_${person}_messages`
+        );
+
+
+    let html = "";
+
+
+    if(!list.length){
+
+        html = `
+
+            <div class="empty">
+
+                <i class="fa-solid fa-message"></i>
+
+                <b>
+                    Il n'y a aucun message
+                </b>
+
+                <br>
+
+                Pour ${
+                    person === "pasteur"
+                    ? "le Pasteur"
+                    : "le Berger"
+                }
+                pour le moment.
+
+            </div>
+
+        `;
+
+    }else{
+
+        list.forEach(function(item){
+
+            html += `
+
+                <div class="item">
+
+                    <h4>
+                        💬
+                        ${esc(
+                            item.title ||
+                            "Message"
+                        )}
+                    </h4>
+
+                    <p style="white-space:pre-line">
+
+                        ${esc(
+                            item.content ||
+                            item.text ||
+                            ""
+                        )}
+
+                    </p>
+
+                    ${
+                        item.author
+                        ? `
+                            <small>
+                                ${esc(item.author)}
+                            </small>
+                        `
+                        : ""
+                    }
+
+                </div>
+
+            `;
+
+        });
+
+    }
+
+
+    show(
+        "Messages — " +
+        (
+            person === "pasteur"
+            ? "Pasteur"
+            : "Berger"
+        ),
+        html
+    );
+
+}
+
+
+/* =========================================
+   VOCAUX
+========================================= */
+
+function openVocaux(person){
+
+    let list =
+        getAll(
+            `micla_${person}_vocaux`
+        );
+
+
+    if(!list.length){
+
+        list =
+            getAll(
+                `micla_${person}_audio`
+            );
+
+    }
+
+
+    let html = "";
+
+
+    if(!list.length){
+
+        html = `
+
+            <div class="empty">
+
+                <i class="fa-solid fa-microphone"></i>
+
+                <b>
+                    Il n'y a aucun vocal
+                </b>
+
+                <br>
+
+                Pour ${
+                    person === "pasteur"
+                    ? "le Pasteur"
+                    : "le Berger"
+                }
+                pour le moment.
+
+            </div>
+
+        `;
+
+    }else{
+
+        list.forEach(function(item,index){
+
+            const audio =
+                item.audio ||
+                item.url ||
+                "";
+
+
+            html += `
+
+                <div class="item">
+
+                    <h4>
+
+                        🎙️
+
+                        ${esc(
+                            item.title ||
+                            "Vocal " + (index + 1)
+                        )}
+
+                    </h4>
+
+                    ${
+                        audio
+                        ? `
+                            <audio
+                                controls
+                                preload="metadata"
+                                src="${esc(audio)}"
+                            ></audio>
+                        `
+                        : `
+                            <p>
+                                Audio indisponible.
+                            </p>
+                        `
+                    }
+
+                    ${
+                        item.author
+                        ? `
+                            <small>
+                                ${esc(item.author)}
+                            </small>
+                        `
+                        : ""
+                    }
+
+                </div>
+
+            `;
+
+        });
+
+    }
+
+
+    show(
+        "Vocaux — " +
+        (
+            person === "pasteur"
+            ? "Pasteur"
+            : "Berger"
+        ),
+        html
+    );
+
+}
+
+
+/* =========================================
+   TOUCHE ÉCHAP
+========================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Escape"){
+
+            closeModal();
+
+        }
+
+    }
+);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,191 @@
+{
+  "site": {
+    "name": "MI.C.L.A — CITÉ DE REFUGE",
+    "meaning": "Ministère des Chrétiens pour Libérer les Âmes — Cité de Refuge",
+    "presentation": "Bienvenue à MI.C.L.A — Cité de Refuge, un ministère consacré à la foi, à la prière, à l'enseignement de la Parole de Dieu et à l'accompagnement des âmes.",
+    "verse": "Jérémie 33:3",
+    "pastor": "Jérémie Bakadisanga",
+    "berger": "Chardin Vuanda",
+    "mainPhoto": ""
+  },
+
+  "programme": [
+    {
+      "id": 1,
+      "jour": "Lundi",
+      "activite": "Une heure avec Jésus — Intercession",
+      "heure": "17h00–18h00",
+      "predicateur": "À définir",
+      "moderateur": "À définir"
+    },
+    {
+      "id": 2,
+      "jour": "Mardi",
+      "activite": "Partage biblique",
+      "heure": "17h00–18h00",
+      "predicateur": "À définir",
+      "moderateur": "À définir"
+    },
+    {
+      "id": 3,
+      "jour": "Mercredi",
+      "activite": "Culte d’enseignement",
+      "heure": "17h30–19h30",
+      "predicateur": "À définir",
+      "moderateur": "À définir"
+    },
+    {
+      "id": 4,
+      "jour": "Jeudi",
+      "activite": "Intercession des serviteurs de Dieu",
+      "heure": "17h00–18h00",
+      "predicateur": "À définir",
+      "moderateur": "À définir"
+    },
+    {
+      "id": 5,
+      "jour": "Vendredi",
+      "activite": "Combat spirituel",
+      "heure": "17h30–19h30",
+      "predicateur": "À définir",
+      "moderateur": "À définir"
+    },
+    {
+      "id": 6,
+      "jour": "Samedi",
+      "activite": "Programme de la Jeunesse",
+      "heure": "16h30–17h30",
+      "predicateur": "À définir",
+      "moderateur": "À définir"
+    },
+    {
+      "id": 7,
+      "jour": "Dimanche",
+      "activite": "Adoration & Action de Grâce",
+      "heure": "07h30–10h30",
+      "predicateur": "À définir",
+      "moderateur": "À définir"
+    }
+  ],
+
+  "activites": [],
+  "chantres": [],
+  "chansons": [],
+  "affiches": [],
+  "galerie": [],
+  "messages": [],
+  "actualites": [],
+
+  "jeunesse": {
+    "photo": "",
+    "message": "",
+    "prayer": "",
+    "note": "",
+    "preacher": "",
+    "moderator": "",
+    "verse": "",
+    "verseReference": "",
+    "announcements": [],
+    "audios": [],
+    "videos": [],
+    "gallery": [],
+    "activities": []
+  },
+
+  "protocole": {
+    "annonce": "",
+    "programme": [
+      {
+        "id": 1,
+        "jour": "Lundi",
+        "activite": "Une heure avec Jésus",
+        "heure": "17h00–18h00",
+        "responsable": "À définir",
+        "observation": "Présence avant le début"
+      },
+      {
+        "id": 2,
+        "jour": "Mardi",
+        "activite": "Partage biblique",
+        "heure": "17h00–18h00",
+        "responsable": "À définir",
+        "observation": "Accueil et organisation"
+      },
+      {
+        "id": 3,
+        "jour": "Mercredi",
+        "activite": "Culte d’enseignement",
+        "heure": "17h30–19h30",
+        "responsable": "À définir",
+        "observation": "Arriver avant le culte"
+      },
+      {
+        "id": 4,
+        "jour": "Jeudi",
+        "activite": "Intercession des serviteurs de Dieu",
+        "heure": "17h00–18h00",
+        "responsable": "À définir",
+        "observation": "Préparation avant l’arrivée des fidèles"
+      },
+      {
+        "id": 5,
+        "jour": "Vendredi",
+        "activite": "Combat spirituel",
+        "heure": "17h30–19h30",
+        "responsable": "À définir",
+        "observation": "Service jusqu’à la fin"
+      },
+      {
+        "id": 6,
+        "jour": "Samedi",
+        "activite": "Programme de la Jeunesse",
+        "heure": "16h30–17h30",
+        "responsable": "À définir",
+        "observation": "Présence avant 16h30"
+      },
+      {
+        "id": 7,
+        "jour": "Dimanche",
+        "activite": "Adoration & Action de Grâce",
+        "heure": "07h30–10h30",
+        "responsable": "À définir",
+        "observation": "Présence obligatoire avant le début"
+      }
+    ]
+  },
+
+  "pasteur": {
+    "messages": [],
+    "audios": [],
+    "prayers": [],
+    "announcements": []
+  },
+
+  "berger": {
+    "messages": [],
+    "audios": [],
+    "prayers": [],
+    "announcements": []
+  },
+
+  "contacts": {
+    "pastor": {
+      "name": "Jérémie Bakadisanga",
+      "phone": "+243 904 490 937"
+    },
+    "berger": {
+      "name": "Chardin Vuanda",
+      "phone": "+243 896 039 439"
+    },
+    "whatsappGroup": "https://chat.whatsapp.com/DkNLg4tKx3t7NM8N1wVZxI"
+  },
+
+  "localisation": {
+    "address": "",
+    "description": "",
+    "latitude": "",
+    "longitude": ""
+  },
+
+  "support": []
+}
